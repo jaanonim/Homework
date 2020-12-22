@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:homework/components/menu.dart';
 import 'package:homework/models/homeworkItem.dart';
-import 'package:homework/components/item.dart';
+import 'file:///E:/Mateusz/dodatki/PROGRAMOWANIE/flutter/homework/lib/screens/home/components/item.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -10,13 +10,11 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<HomeworkItem> homeworks = [
-    HomeworkItem(title: "a"),
-    HomeworkItem(title: "b"),
-    HomeworkItem(title: "c"),
-    HomeworkItem(title: "d"),
-    HomeworkItem(title: "g"),
-    HomeworkItem(title: "s"),
-    HomeworkItem(title: "s"),
+    FileItem(title: "ok", imgUrl: "none"),
+    FolderItem(title: "ok"),
+    FileItem(title: "ok", imgUrl: "none"),
+    FileItem(title: "ok", imgUrl: "none"),
+    FolderItem(title: "ok"),
   ];
 
   createNewDoc(BuildContext context) {

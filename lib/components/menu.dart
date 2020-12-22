@@ -18,13 +18,15 @@ class Menu extends StatelessWidget {
             ),
           ),
           ListTile(
+            leading: Icon(Icons.settings),
             title: Text('Settings'),
             onTap: () {
               Navigator.pushNamed(context, "/settings");
             },
           ),
           ListTile(
-            title: Text('Something'),
+            leading: Icon(Icons.delete),
+            title: Text('Trash'),
             onTap: () {
             },
           ),

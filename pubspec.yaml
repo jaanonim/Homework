@@ -23,6 +23,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  sqflite: any
+  path_provider: any
+  uuid: ^2.2.2
+  drag_and_drop_gridview: ^1.0.4
 
 
   # The following adds the Cupertino Icons font to your application.
