@@ -9,12 +9,21 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Draggable(
-      child: Card(
-        child: Center(child: Text(homeworkItem.title)),
-      ),
-      feedback: Card(
-        child: Center(child: Text(homeworkItem.title)),
+    return  GestureDetector(
+      onTap: (){
+        Navigator.pushNamed(context, "/editHomework",arguments: {
+          'title':homeworkItem.title
+        });
+      },
+      child: Draggable(
+        child: Card(
+          child: Center(child: Text(homeworkItem.title)),
+        ),
+        feedback: Card(
+          child: Center(child: Text(homeworkItem.title)),
+        ),
+
+
       ),
     );
   }
