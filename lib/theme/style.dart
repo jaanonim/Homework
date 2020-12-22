@@ -6,8 +6,8 @@ class MainTheme{
     primaryColor: Colors.cyan[700],
     accentColor: Colors.cyanAccent[700],
     textTheme: TextTheme(
-      headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-      headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+      headline1: TextStyle(fontSize: 36.0, fontWeight: FontWeight.bold),
+      headline6: TextStyle(fontSize: 24.0),
       bodyText2: TextStyle(fontSize: 14.0, fontFamily: 'Hind'),
     ),
     /*
