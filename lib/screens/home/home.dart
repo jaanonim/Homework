@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:homework/components/menu.dart';
 import 'package:homework/models/homeworkItem.dart';
-import 'file:///E:/Mateusz/dodatki/PROGRAMOWANIE/flutter/homework/lib/screens/home/components/item.dart';
+import 'package:drag_and_drop_gridview/devdrag.dart';
+import 'package:homework/screens/home/components/item.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -10,7 +11,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List<HomeworkItem> homeworks = [
-    FileItem(title: "ok", imgUrl: "none"),
+    FileItem(title: "costam", imgUrl: "none"),
     FolderItem(title: "ok"),
     FileItem(title: "ok", imgUrl: "none"),
     FileItem(title: "ok", imgUrl: "none"),
@@ -24,11 +25,11 @@ class _HomeState extends State<Home> {
           return AlertDialog(
             title: Center(
               child: Text(
-                  "Create new homework:",
-                  style: Theme.of(context).textTheme.headline6,
-                ),
+                "Create new homework:",
+                style: Theme.of(context).textTheme.headline6,
+              ),
             ),
-            contentPadding: EdgeInsets.symmetric(vertical: 10,horizontal: 25),
+            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
             content: TextField(
               controller: TextEditingController(),
             ),
@@ -51,17 +52,26 @@ class _HomeState extends State<Home> {
         centerTitle: true,
       ),
       drawer: Menu(),
-      body: GridView.count(
+      body: DragAndDropGridView(
+        controller: ScrollController(),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
-          mainAxisSpacing: 5,
-          crossAxisSpacing: 5,
-          padding: const EdgeInsets.all(5),
-          childAspectRatio: 0.7072,
-          children: homeworks.map<Widget>((homework) {
-            return Item(
-              homeworkItem: homework,
-            );
-          }).toList()),
+          childAspectRatio: 0.7,
+        ),
+        padding: EdgeInsets.all(20),
+        itemBuilder: (context, index) => Item(homeworkItem: homeworks[index],),
+        itemCount: homeworks.length,
+        onWillAccept: (oldIndex, newIndex) {
+          return true;
+        },
+        onReorder: (oldIndex, newIndex) {
+          HomeworkItem _temp;
+          _temp = homeworks[newIndex];
+          homeworks[newIndex] = homeworks[oldIndex];
+          homeworks[oldIndex] = _temp;
+          setState(() {});
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           createNewDoc(context);

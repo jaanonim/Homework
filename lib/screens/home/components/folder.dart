@@ -3,8 +3,9 @@ import 'package:homework/models/homeworkItem.dart';
 
 class Folder extends StatelessWidget {
   final HomeworkItem homeworkItem;
+  final Function del;
 
-  Folder({this.homeworkItem});
+  Folder({this.homeworkItem, this.del});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,12 @@ class Folder extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 MaterialButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    del(
+                        context,
+                        "Are you sure you want to delete this folder and everything in it?",
+                        () {});
+                  },
                   child: Icon(
                     Icons.delete,
                     size: 15,
