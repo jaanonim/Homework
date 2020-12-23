@@ -6,15 +6,16 @@ import 'package:homework/components/yesNoPopup.dart';
 
 class Item extends StatelessWidget {
   final HomeworkItem homeworkItem;
+  final Function update;
 
-  Item({this.homeworkItem});
+  Item({this.homeworkItem, this.update});
 
   @override
   Widget build(BuildContext context) {
     if (homeworkItem is FolderItem) {
-      return Folder(homeworkItem: homeworkItem,del: yesNoPopup);
+      return Folder(homeworkItem: homeworkItem,del: yesNoPopup, update: update);
     } else {
-      return File(homeworkItem: homeworkItem,del: yesNoPopup);
+      return File(homeworkItem: homeworkItem,del: yesNoPopup, update: update);
     }
   }
 }

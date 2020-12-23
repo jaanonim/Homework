@@ -3,6 +3,7 @@ import 'package:homework/components/menu.dart';
 import 'package:homework/models/homeworkItem.dart';
 import 'package:drag_and_drop_gridview/devdrag.dart';
 import 'package:homework/screens/home/components/item.dart';
+import 'package:homework/screens/home/components/folder.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -10,13 +11,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List<HomeworkItem> homeworks = [
-    FileItem(title: "costam", imgUrl: "none"),
-    FolderItem(title: "ok"),
-    FileItem(title: "ok", imgUrl: "none"),
-    FileItem(title: "ok", imgUrl: "none"),
-    FolderItem(title: "ok"),
-  ];
+  FolderItem folder = FolderItem(title: "home");
 
   createNewDoc(BuildContext context) {
     return showDialog(
@@ -45,6 +40,18 @@ class _HomeState extends State<Home> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    folder.MoveToFolder([
+      FolderItem(title: "lol"),
+      FileItem(title: "costam", imgUrl: "none"),
+      FileItem(title: "oek", imgUrl: "none"),
+      FileItem(title: "ok", imgUrl: "none"),
+      FolderItem(title: "ok"),
+    ]);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -59,16 +66,18 @@ class _HomeState extends State<Home> {
           childAspectRatio: 0.7,
         ),
         padding: EdgeInsets.all(20),
-        itemBuilder: (context, index) => Item(homeworkItem: homeworks[index],),
-        itemCount: homeworks.length,
+        itemBuilder: (context, index) => Item(
+            homeworkItem: folder.children[index],
+            update: () {
+              setState(() {});
+            }),
+        itemCount: folder.children.length,
         onWillAccept: (oldIndex, newIndex) {
-          return true;
+          return folder.children[newIndex] is FolderItem;
         },
         onReorder: (oldIndex, newIndex) {
-          HomeworkItem _temp;
-          _temp = homeworks[newIndex];
-          homeworks[newIndex] = homeworks[oldIndex];
-          homeworks[oldIndex] = _temp;
+          (folder.children[newIndex] as FolderItem)
+              .MoveToFolder([folder.children[oldIndex]]);
           setState(() {});
         },
       ),

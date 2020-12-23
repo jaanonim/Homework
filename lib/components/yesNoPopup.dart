@@ -6,18 +6,24 @@ yesNoPopup(BuildContext context, String title, Function onYes) {
       builder: (context) {
         return AlertDialog(
           title: Center(
-            child: Text(title,
+            child: Text(
+              title,
               style: Theme.of(context).textTheme.headline6,
             ),
           ),
           actions: [
             MaterialButton(
-              onPressed: () {Navigator.pop(context);},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               elevation: 5,
               child: Text('No'),
             ),
             MaterialButton(
-              onPressed: () {onYes();},
+              onPressed: () {
+                onYes();
+                Navigator.pop(context);
+              },
               elevation: 5,
               child: Text('Yes'),
             )
