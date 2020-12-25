@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:homework/components/menu.dart';
-import 'package:homework/models/homeworkItem.dart';
+import 'package:homework/models/homework_item.dart';
 import 'package:homework/components/item.dart';
 
 class Home extends StatefulWidget {
@@ -62,6 +62,7 @@ class _HomeState extends State<Home> {
           children: homeworks.map<Widget>((homework) {
             return Item(
               homeworkItem: homework,
+              
             );
           }).toList()),
       floatingActionButton: FloatingActionButton(
