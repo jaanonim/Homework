@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:homework/models/homework_item.dart';
+import 'package:homework/models/image_loader.dart';
 
 class EditHomework extends StatefulWidget {
   @override
@@ -7,15 +9,17 @@ class EditHomework extends StatefulWidget {
 
 class _EditHomeworkState extends State<EditHomework> {
   Map data = {};
-  var items = [0, 1, 2, 3, 4];
+  var items = [];
+  HomeworkItem homework;
 
   @override
   Widget build(BuildContext context) {
     data = ModalRoute.of(context).settings.arguments;
-
+    homework = data["homeworkItem"];
+    items = homework.pathImages;
     return Scaffold(
       appBar: AppBar(
-        title: Text(data['title']),
+        title: Text(homework.title),
         centerTitle: true,
       ),
       body: ListView(
@@ -35,12 +39,23 @@ class _EditHomeworkState extends State<EditHomework> {
             )
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          var imagePath = await ImageLoader().getImageGallery();
+          addNewImage(imagePath);
+        },
+        child: Icon(
+          Icons.add,
+          color: Colors.white,
+          size: 40,
+        ),
+      ),
     );
   }
 
-  generatePage(var i) {
+  generatePage(var pathImage) {
     return Stack(children: [
-      Image.asset("assets/testImage/" + (i + 1).toString() + ".jpg"),
+      Image.asset(pathImage),
       Align(
         alignment: Alignment.topRight,
         child: Column(
@@ -48,14 +63,14 @@ class _EditHomeworkState extends State<EditHomework> {
             IconButton(
               icon: Icon(Icons.arrow_circle_up_rounded),
               onPressed: () {
-                swapPages(i, true);
+                swapPages(pathImage, true);
               },
               iconSize: 50,
             ),
             IconButton(
               icon: Icon(Icons.arrow_circle_down_rounded),
               onPressed: () {
-                swapPages(i, false);
+                swapPages(pathImage, false);
               },
               iconSize: 50,
             ),
@@ -66,7 +81,7 @@ class _EditHomeworkState extends State<EditHomework> {
     //     chi )
   }
 
-  swapPages(int object, bool isUp) {
+  swapPages(var object, bool isUp) {
     setState(() {
       int oldIndex = items.indexOf(object);
       int newIndex = oldIndex + (isUp ? -1 : 1);
@@ -74,6 +89,12 @@ class _EditHomeworkState extends State<EditHomework> {
       var temp = items[oldIndex];
       items.removeAt(oldIndex);
       items.insert(newIndex, temp);
+    });
+  }
+
+  addNewImage(String path) {
+    setState(() {
+      items.add(path);
     });
   }
 }

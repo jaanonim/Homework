@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homework/models/homeworkItem.dart';
+import 'package:homework/models/homework_item.dart';
 
 class Item extends StatelessWidget {
 
@@ -12,7 +12,7 @@ class Item extends StatelessWidget {
     return  GestureDetector(
       onTap: (){
         Navigator.pushNamed(context, "/editHomework",arguments: {
-          'title':homeworkItem.title
+          'homeworkItem':homeworkItem
         });
       },
       child: Draggable(
