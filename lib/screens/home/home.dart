@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:homework/components/inputPopup.dart';
 import 'package:homework/components/menu.dart';
 import 'package:homework/models/homework_item.dart';
-import 'package:drag_and_drop_gridview/devdrag.dart';
-import 'package:homework/screens/home/components/item.dart';
-import 'package:homework/components/inputPopup.dart';
+import 'package:homework/screens/home/components/body.dart';
 import 'package:homework/screens/home/components/hierarchy_element.dart';
+
 
 class Home extends StatefulWidget {
   @override
@@ -14,19 +14,6 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   List<FolderItem> hierarchy = [FolderItem(title: "home")];
   final controller = TextEditingController();
-
-  void newFolder(oldIndex, newIndex) {
-    FolderItem newFolder = FolderItem(title: controller.text);
-    hierarchy.last.MoveToFolder([
-      newFolder,
-    ]);
-    newFolder.MoveToFolder([
-      hierarchy.last.children[oldIndex],
-      hierarchy.last.children[newIndex],
-    ]);
-    setState(() {});
-    Navigator.pop(context);
-  }
 
   @override
   void initState() {
@@ -39,12 +26,6 @@ class _HomeState extends State<Home> {
       FileItem(title: "ok"),
       FolderItem(title: "ok"),
     ]);
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
   }
 
   @override
@@ -77,42 +58,7 @@ class _HomeState extends State<Home> {
         ),
       ),
       drawer: Menu(),
-      body: DragAndDropGridView(
-        controller: ScrollController(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: 0.7,
-        ),
-        padding: EdgeInsets.all(20),
-        itemBuilder: (context, index) => Item(
-            homeworkItem: hierarchy.last.children[index],
-            update: () {
-              setState(() {});
-            },
-            addToHierarchy: (FolderItem item) {
-              setState(() {
-                hierarchy.add(item);
-              });
-            }),
-        itemCount: hierarchy.last.children.length,
-        onWillAccept: (oldIndex, newIndex) {
-          if (oldIndex == newIndex) {
-            return false;
-          }
-          return true;
-        },
-        onReorder: (oldIndex, newIndex) {
-          if (hierarchy.last.children[newIndex] is FolderItem) {
-            (hierarchy.last.children[newIndex] as FolderItem)
-                .MoveToFolder([hierarchy.last.children[oldIndex]]);
-            setState(() {});
-          } else {
-            inputPopup(context, "Create new folder:", "Create", controller, () {
-              newFolder(oldIndex, newIndex);
-            });
-          }
-        },
-      ),
+      body: Body(hierarchy: hierarchy,update: (){setState(() { });},),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           inputPopup(context, "Create new homework:", "Create", controller, () {
@@ -121,7 +67,7 @@ class _HomeState extends State<Home> {
             Navigator.pop(context);
             Navigator.pushNamed(context, "/editHomework",
                 arguments: {"homeworkItem": homeworkItem});
-            setState(() { });
+            setState(() {});
           });
         },
         child: Icon(
