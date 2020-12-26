@@ -31,6 +31,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    // TODO: remove this debug
     hierarchy.last.MoveToFolder([
       FolderItem(title: "lol"),
       FileItem(title: "costam"),
@@ -54,22 +55,24 @@ class _HomeState extends State<Home> {
         centerTitle: true,
         bottom: PreferredSize(
           child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(children: hierarchy.map((element) => HierarchyElement(
-                  folder: element,
-                  isLast: element==hierarchy.last,
-                  removeFromHierarchy: (folder){
-                    setState(() {
-                      for(int i = hierarchy.length-1; i>0;i--){
-                        if(hierarchy[i]==folder){
-                          break;
-                        }
-                        hierarchy.removeAt(i);
-                      }
-                    });
-                  },
-                )).toList())
-          ),
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                  children: hierarchy
+                      .map((element) => HierarchyElement(
+                            folder: element,
+                            isLast: element == hierarchy.last,
+                            removeFromHierarchy: (folder) {
+                              setState(() {
+                                for (int i = hierarchy.length - 1; i > 0; i--) {
+                                  if (hierarchy[i] == folder) {
+                                    break;
+                                  }
+                                  hierarchy.removeAt(i);
+                                }
+                              });
+                            },
+                          ))
+                      .toList())),
           preferredSize: Size.fromHeight(40),
         ),
       ),
@@ -86,10 +89,11 @@ class _HomeState extends State<Home> {
             update: () {
               setState(() {});
             },
-            addToHierarchy: (FolderItem item){
-              setState(() {hierarchy.add(item);});
-            }
-        ),
+            addToHierarchy: (FolderItem item) {
+              setState(() {
+                hierarchy.add(item);
+              });
+            }),
         itemCount: hierarchy.last.children.length,
         onWillAccept: (oldIndex, newIndex) {
           if (oldIndex == newIndex) {
@@ -111,8 +115,14 @@ class _HomeState extends State<Home> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          inputPopup(
-              context, "Create new homework:", "Create", controller, () {});
+          inputPopup(context, "Create new homework:", "Create", controller, () {
+            HomeworkItem homeworkItem = FileItem(title: controller.text);
+            hierarchy.last.MoveToFolder([homeworkItem]);
+            Navigator.pop(context);
+            Navigator.pushNamed(context, "/editHomework",
+                arguments: {"homeworkItem": homeworkItem});
+            setState(() { });
+          });
         },
         child: Icon(
           Icons.add,
