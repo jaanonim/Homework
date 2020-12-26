@@ -3,7 +3,8 @@ import 'package:homework/components/menu.dart';
 import 'package:homework/models/homeworkItem.dart';
 import 'package:drag_and_drop_gridview/devdrag.dart';
 import 'package:homework/screens/home/components/item.dart';
-import 'package:homework/screens/home/components/folder.dart';
+import 'package:homework/components/inputPopup.dart';
+import 'package:homework/screens/home/components/hierarchyElement.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -11,38 +12,26 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  FolderItem folder = FolderItem(title: "home");
+  List<FolderItem> hierarchy = [FolderItem(title: "home")];
+  final controller = TextEditingController();
 
-  createNewDoc(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Center(
-              child: Text(
-                "Create new homework:",
-                style: Theme.of(context).textTheme.headline6,
-              ),
-            ),
-            contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-            content: TextField(
-              controller: TextEditingController(),
-            ),
-            actions: [
-              MaterialButton(
-                onPressed: () {},
-                elevation: 5,
-                child: Text('Create'),
-              )
-            ],
-          );
-        });
+  void newFolder(oldIndex, newIndex) {
+    FolderItem newFolder = FolderItem(title: controller.text);
+    hierarchy.last.MoveToFolder([
+      newFolder,
+    ]);
+    newFolder.MoveToFolder([
+      hierarchy.last.children[oldIndex],
+      hierarchy.last.children[newIndex],
+    ]);
+    setState(() {});
+    Navigator.pop(context);
   }
 
   @override
   void initState() {
     super.initState();
-    folder.MoveToFolder([
+    hierarchy.last.MoveToFolder([
       FolderItem(title: "lol"),
       FileItem(title: "costam", imgUrl: "none"),
       FileItem(title: "oek", imgUrl: "none"),
@@ -52,11 +41,37 @@ class _HomeState extends State<Home> {
   }
 
   @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("homework"),
+        title: Text("Homework"),
         centerTitle: true,
+        bottom: PreferredSize(
+          child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(children: hierarchy.map((element) => HierarchyElement(
+                  folder: element,
+                  isLast: element==hierarchy.last,
+                  removeFromHierarchy: (folder){
+                    setState(() {
+                      for(int i = hierarchy.length-1; i>0;i--){
+                        if(hierarchy[i]==folder){
+                          break;
+                        }
+                        hierarchy.removeAt(i);
+                      }
+                    });
+                  },
+                )).toList())
+          ),
+          preferredSize: Size.fromHeight(40),
+        ),
       ),
       drawer: Menu(),
       body: DragAndDropGridView(
@@ -67,23 +82,37 @@ class _HomeState extends State<Home> {
         ),
         padding: EdgeInsets.all(20),
         itemBuilder: (context, index) => Item(
-            homeworkItem: folder.children[index],
+            homeworkItem: hierarchy.last.children[index],
             update: () {
               setState(() {});
-            }),
-        itemCount: folder.children.length,
+            },
+            addToHierarchy: (FolderItem item){
+              setState(() {hierarchy.add(item);});
+            }
+        ),
+        itemCount: hierarchy.last.children.length,
         onWillAccept: (oldIndex, newIndex) {
-          return folder.children[newIndex] is FolderItem;
+          if (oldIndex == newIndex) {
+            return false;
+          }
+          return true;
         },
         onReorder: (oldIndex, newIndex) {
-          (folder.children[newIndex] as FolderItem)
-              .MoveToFolder([folder.children[oldIndex]]);
-          setState(() {});
+          if (hierarchy.last.children[newIndex] is FolderItem) {
+            (hierarchy.last.children[newIndex] as FolderItem)
+                .MoveToFolder([hierarchy.last.children[oldIndex]]);
+            setState(() {});
+          } else {
+            inputPopup(context, "Create new folder:", "Create", controller, () {
+              newFolder(oldIndex, newIndex);
+            });
+          }
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          createNewDoc(context);
+          inputPopup(
+              context, "Create new homework:", "Create", controller, () {});
         },
         child: Icon(
           Icons.add,
