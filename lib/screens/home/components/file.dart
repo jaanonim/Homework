@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homework/models/homeworkItem.dart';
+import 'package:homework/models/homework_item.dart';
 
 class File extends StatelessWidget {
   final HomeworkItem homeworkItem;
@@ -13,7 +13,8 @@ class File extends StatelessWidget {
     return Card(
       child: InkWell(
         onTap: () {
-          // TODO: Dodac akcje po klikniecu
+          Navigator.pushNamed(context, "/editHomework",
+              arguments: {"homeworkItem": homeworkItem});
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 7),
@@ -30,10 +31,12 @@ class File extends StatelessWidget {
                   children: [
                     MaterialButton(
                       onPressed: () {
-                        del(
-                            context,
+                        del(context,
                             "Are you sure you want to delete this homework?",
-                            (){homeworkItem.DeleteItem(); update();});
+                            () {
+                          homeworkItem.DeleteItem();
+                          update();
+                        });
                       },
                       child: Icon(
                         Icons.delete,

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:homework/components/menu.dart';
-import 'package:homework/models/homeworkItem.dart';
+import 'package:homework/models/homework_item.dart';
 import 'package:drag_and_drop_gridview/devdrag.dart';
 import 'package:homework/screens/home/components/item.dart';
 import 'package:homework/components/inputPopup.dart';
-import 'package:homework/screens/home/components/hierarchyElement.dart';
+import 'package:homework/screens/home/components/hierarchy_element.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -33,9 +33,9 @@ class _HomeState extends State<Home> {
     super.initState();
     hierarchy.last.MoveToFolder([
       FolderItem(title: "lol"),
-      FileItem(title: "costam", imgUrl: "none"),
-      FileItem(title: "oek", imgUrl: "none"),
-      FileItem(title: "ok", imgUrl: "none"),
+      FileItem(title: "costam"),
+      FileItem(title: "oek"),
+      FileItem(title: "ok"),
       FolderItem(title: "ok"),
     ]);
   }
