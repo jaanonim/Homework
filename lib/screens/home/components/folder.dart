@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homework/models/homeworkItem.dart';
+import 'package:homework/models/homework_item.dart';
 import 'package:homework/components/inputPopup.dart';
 
 class Folder extends StatelessWidget {

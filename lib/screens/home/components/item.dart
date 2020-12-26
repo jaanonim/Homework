@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homework/models/homeworkItem.dart';
+import 'package:homework/models/homework_item.dart';
 import 'package:homework/screens/home/components/file.dart';
 import 'package:homework/screens/home/components/folder.dart';
 import 'package:homework/components/yesNoPopup.dart';

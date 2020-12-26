@@ -10,7 +10,7 @@ class EditHomework extends StatefulWidget {
 class _EditHomeworkState extends State<EditHomework> {
   Map data = {};
   var items = [];
-  HomeworkItem homework;
+  FileItem homework;
 
   @override
   Widget build(BuildContext context) {
