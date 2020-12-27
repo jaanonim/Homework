@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-inputPopup(BuildContext context, String title, String buttonText, TextEditingController controller, Function create) {
+inputPopup(BuildContext context, String title, String buttonText,
+    TextEditingController controller, Function create) {
   return showDialog(
       context: context,
       builder: (context) {
@@ -13,7 +14,16 @@ inputPopup(BuildContext context, String title, String buttonText, TextEditingCon
           ),
           contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
           content: TextField(
+            autofocus: true,
             controller: controller,
+            style: Theme.of(context).textTheme.bodyText1,
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.fromLTRB(2,5,2,5),
+              isDense: true,
+            ),
+            onSubmitted: (value) {
+              create();
+            },
           ),
           actions: [
             MaterialButton(

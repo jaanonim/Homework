@@ -13,10 +13,16 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (homeworkItem is FolderItem) {
-      return Folder(homeworkItem: homeworkItem,del: yesNoPopup, update: update, addToHierarchy: addToHierarchy);
-    } else {
-      return File(homeworkItem: homeworkItem,del: yesNoPopup, update: update);
-    }
+    Widget content = (homeworkItem is FolderItem)
+        ? Folder(
+            homeworkItem: homeworkItem,
+            del: yesNoPopup,
+            update: update,
+            addToHierarchy: addToHierarchy)
+        : File(homeworkItem: homeworkItem, del: yesNoPopup, update: update);
+    return Card(
+        child: content,
+
+      );
   }
 }
