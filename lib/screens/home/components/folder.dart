@@ -51,7 +51,7 @@ class Folder extends StatelessWidget {
                             del(context,
                                 "Are you sure you want to delete this folder and everything in it?",
                                 () {
-                              homeworkItem.DeleteItem();
+                              homeworkItem.deleteItem();
                               update();
                             });
                           },

@@ -37,7 +37,7 @@ class File extends StatelessWidget {
                         del(context,
                             "Are you sure you want to delete this homework?",
                             () {
-                          homeworkItem.DeleteItem();
+                          homeworkItem.deleteItem();
                           update();
                         });
                       },

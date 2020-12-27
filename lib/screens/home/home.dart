@@ -4,7 +4,7 @@ import 'package:homework/components/menu.dart';
 import 'package:homework/models/homework_item.dart';
 import 'package:homework/screens/home/components/body.dart';
 import 'package:homework/screens/home/components/hierarchy_element.dart';
-
+import 'package:homework/services/file_service.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,17 +15,31 @@ class _HomeState extends State<Home> {
   List<FolderItem> hierarchy = [FolderItem(title: "home")];
   final controller = TextEditingController();
 
+  void Setup() async {}
+
   @override
   void initState() {
     super.initState();
+    readItem().then((h) {
+      if (h != null) {
+        setState(() {
+          hierarchy[0] = h;
+        });
+      }
+      else{
+        print("Cannot read file!");
+      }
+    });
+
+    Setup();
     // TODO: remove this debug
-    hierarchy.last.MoveToFolder([
+    /*hierarchy.last.moveToFolder([
       FolderItem(title: "lol"),
       FileItem(title: "costam"),
       FileItem(title: "oek"),
       FileItem(title: "ok"),
       FolderItem(title: "ok"),
-    ]);
+    ]);*/
   }
 
   @override
@@ -58,15 +72,21 @@ class _HomeState extends State<Home> {
         ),
       ),
       drawer: Menu(),
-      body: Body(hierarchy: hierarchy,update: (){setState(() { });},),
+      body: Body(
+        hierarchy: hierarchy,
+        update: () {
+          setState(() {});
+        },
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           inputPopup(context, "Create new homework:", "Create", controller, () {
             HomeworkItem homeworkItem = FileItem(title: controller.text);
-            hierarchy.last.MoveToFolder([homeworkItem]);
+            hierarchy.last.moveToFolder([homeworkItem]);
             Navigator.pop(context);
             Navigator.pushNamed(context, "/editHomework",
                 arguments: {"homeworkItem": homeworkItem});
+            writeItem(hierarchy.first);
             setState(() {});
           });
         },

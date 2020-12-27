@@ -14,10 +14,10 @@ class Body extends StatelessWidget {
 
   void newFolder(oldIndex, newIndex, context) {
     FolderItem newFolder = FolderItem(title: controller.text);
-    hierarchy.last.MoveToFolder([
+    hierarchy.last.moveToFolder([
       newFolder,
     ]);
-    newFolder.MoveToFolder([
+    newFolder.moveToFolder([
       hierarchy.last.children[oldIndex],
       hierarchy.last.children[newIndex],
     ]);
@@ -34,7 +34,8 @@ class Body extends StatelessWidget {
         addToHierarchy: (FolderItem item) {
           hierarchy.add(item);
           update();
-        });
+        },
+    );
 
     if (isDragged) {
       return Opacity(
@@ -71,7 +72,7 @@ class Body extends StatelessWidget {
       onReorder: (oldIndex, newIndex) {
         if (hierarchy.last.children[newIndex] is FolderItem) {
           (hierarchy.last.children[newIndex] as FolderItem)
-              .MoveToFolder([hierarchy.last.children[oldIndex]]);
+              .moveToFolder([hierarchy.last.children[oldIndex]]);
           update();
         } else {
           inputPopup(context, "Create new folder:", "Create", controller, () {
