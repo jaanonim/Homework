@@ -4,7 +4,7 @@ import 'package:homework/screens/home/home.dart';
 import 'package:homework/screens/settings/settings.dart';
 import 'package:homework/theme/style.dart';
 
-void main() {
+main() {
   runApp(MaterialApp(
     title: 'homework',
     theme: MainTheme().theme,
