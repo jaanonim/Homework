@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:homework/components/yesNoPopup.dart';
 import 'package:homework/models/homework_item.dart';
 import 'package:homework/models/image_loader.dart';
 
@@ -22,26 +23,25 @@ class _EditHomeworkState extends State<EditHomework> {
         title: Text(homework.title),
         centerTitle: true,
       ),
-      body: ListView(
+      body: ReorderableListView(
+        onReorder: (oldIndex, newIndex) {
+          setState(() {
+            var temp = items[oldIndex];
+            items.removeAt(oldIndex);
+            items.insert(newIndex, temp);
+          });
+        },
         children: [
           for (final i in items)
-            Dismissible(
-              key: ValueKey(i),
-              onDismissed: (direction) {
-                setState(() {
-                  items.remove(i);
-                });
-              },
-              child: ListTile(
-                  title: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: generatePage(i))),
-            )
+            ListTile(
+                key: ValueKey(i),
+                title: generatePage(i))
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           var imagePath = await ImageLoader().getImageGallery();
+          //TODO(n2one): Check if user don't select any photos
           addNewImage(imagePath);
         },
         child: Icon(
@@ -61,16 +61,14 @@ class _EditHomeworkState extends State<EditHomework> {
         child: Column(
           children: [
             IconButton(
-              icon: Icon(Icons.arrow_circle_up_rounded),
+              icon: Icon(Icons.delete),
               onPressed: () {
-                swapPages(pathImage, true);
-              },
-              iconSize: 50,
-            ),
-            IconButton(
-              icon: Icon(Icons.arrow_circle_down_rounded),
-              onPressed: () {
-                swapPages(pathImage, false);
+                yesNoPopup(
+                    context, "Are you sure you want to delete this image?", () {
+                  setState(() {
+                    items.remove(pathImage);
+                  });
+                });
               },
               iconSize: 50,
             ),
@@ -78,18 +76,6 @@ class _EditHomeworkState extends State<EditHomework> {
         ),
       )
     ]);
-    //     chi )
-  }
-
-  swapPages(var object, bool isUp) {
-    setState(() {
-      int oldIndex = items.indexOf(object);
-      int newIndex = oldIndex + (isUp ? -1 : 1);
-      if (newIndex < 0 || newIndex >= items.length) return;
-      var temp = items[oldIndex];
-      items.removeAt(oldIndex);
-      items.insert(newIndex, temp);
-    });
   }
 
   addNewImage(String path) {
