@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:homework/components/yesNoPopup.dart';
 import 'package:homework/models/homework_item.dart';
@@ -26,6 +28,7 @@ class _EditHomeworkState extends State<EditHomework> {
       body: ReorderableListView(
         onReorder: (oldIndex, newIndex) {
           setState(() {
+            if (newIndex < 0 || newIndex > items.length) return;
             var temp = items[oldIndex];
             items.removeAt(oldIndex);
             items.insert(newIndex, temp);
@@ -33,9 +36,7 @@ class _EditHomeworkState extends State<EditHomework> {
         },
         children: [
           for (final i in items)
-            ListTile(
-                key: ValueKey(i),
-                title: generatePage(i))
+            ListTile(key: ValueKey(i), title: generatePage(i))
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -54,28 +55,26 @@ class _EditHomeworkState extends State<EditHomework> {
   }
 
   generatePage(var pathImage) {
-    return Stack(children: [
-      Image.asset(pathImage),
-      Align(
-        alignment: Alignment.topRight,
-        child: Column(
-          children: [
-            IconButton(
-              icon: Icon(Icons.delete),
-              onPressed: () {
-                yesNoPopup(
-                    context, "Are you sure you want to delete this image?", () {
-                  setState(() {
-                    items.remove(pathImage);
-                  });
-                });
-              },
-              iconSize: 50,
-            ),
-          ],
-        ),
-      )
-    ]);
+    var file = new File(pathImage);
+    // return Stack(children: [
+    //   Image.file(file),
+    //   Align(
+    //     alignment: Alignment.topRight,
+    //     child: IconButton(
+    //       icon: Icon(Icons.delete),
+    //       onPressed: () {
+    //         yesNoPopup(context, "Are you sure you want to delete this image?",
+    //             () {
+    //           setState(() {
+    //             items.remove(pathImage);
+    //           });
+    //         });
+    //       },
+    //       iconSize: 50,
+    //     ),
+    //   )
+    // ]);
+    return Image.file(file);
   }
 
   addNewImage(String path) {
