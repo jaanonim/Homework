@@ -18,7 +18,7 @@ inputPopup(BuildContext context, String title, String buttonText,
             controller: controller,
             style: Theme.of(context).textTheme.bodyText1,
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.fromLTRB(2,5,2,5),
+              contentPadding: EdgeInsets.fromLTRB(2, 5, 2, 5),
               isDense: true,
             ),
             onSubmitted: (value) {

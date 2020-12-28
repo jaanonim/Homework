@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:homework/models/hierarchy.dart';
 import 'package:homework/models/homework_item.dart';
+import 'package:provider/provider.dart';
 
 class HierarchyElement extends StatelessWidget {
   final FolderItem folder;
   final bool isLast;
-  final Function(FolderItem) removeFromHierarchy;
 
-  HierarchyElement({this.folder, this.isLast, this.removeFromHierarchy});
+  HierarchyElement({this.folder, this.isLast});
 
   @override
   Widget build(BuildContext context) {
+    Hierarchy hierarchy = Provider.of<Hierarchy>(context);
+
     if (isLast) {
       return Row(
         children: [
@@ -27,7 +30,7 @@ class HierarchyElement extends StatelessWidget {
         children: [
           MaterialButton(
             onPressed: () {
-              removeFromHierarchy(folder);
+              hierarchy.removeFromHierarchy(folder);
             },
             child: Text(folder.title),
             height: 0,

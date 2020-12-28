@@ -13,13 +13,13 @@ class FolderItem extends HomeworkItem {
     });
   }
 
-  FolderItem haveChild(HomeworkItem item){
+  FolderItem haveChild(HomeworkItem item) {
     children.forEach((element) {
-      if (element == item){
+      if (element == item) {
         return this;
-      }else if(element is FolderItem){
+      } else if (element is FolderItem) {
         var b = element.haveChild(item);
-        if(b != null){
+        if (b != null) {
           return b;
         }
       }
@@ -28,12 +28,11 @@ class FolderItem extends HomeworkItem {
   }
 
   @override
-  Map toJSON(){
+  Map toJSON() {
     Map m = super.toJSON();
     m.addAll({
       'children': [
-        for(int i = 0;i<children.length;i++)
-          children[i].toJSON()
+        for (int i = 0; i < children.length; i++) children[i].toJSON()
       ]
     });
     return m;
@@ -48,7 +47,7 @@ class FileItem extends HomeworkItem {
   }
 
   @override
-  Map toJSON(){
+  Map toJSON() {
     Map m = super.toJSON();
     m.addAll({'pathImages': pathImages});
     return m;
@@ -65,36 +64,33 @@ abstract class HomeworkItem {
     parent.children.remove(this);
   }
 
-  static HomeworkItem fromJSON(Map map, FolderItem parent)
-  {
-    if(map.containsKey('children')){
+  static HomeworkItem fromJSON(Map map, FolderItem parent) {
+    if (map.containsKey('children')) {
       FolderItem item = FolderItem(title: map['title']);
       item.parent = parent;
 
       Iterable i = map['children'];
-      List<Map> children = List<Map>.from(i).map((model) =>  model).toList();
+      List<Map> children = List<Map>.from(i).map((model) => model).toList();
       item.children = [
-        for(int i = 0;i<children.length;i++)
-          HomeworkItem.fromJSON(children[i],item)
+        for (int i = 0; i < children.length; i++)
+          HomeworkItem.fromJSON(children[i], item)
       ];
       return item;
-    }
-    else{
+    } else {
       FileItem item = FileItem(title: map['title']);
       item.parent = parent;
 
       Iterable i = map['pathImages'];
-      List<Map> pathImages = List<Map>.from(i).map((model) =>  model).toList();
+      List<Map> pathImages = List<Map>.from(i).map((model) => model).toList();
       item.pathImages = [
-        for(int i = 0;i<pathImages.length;i++)
-          pathImages[i].toString()
+        for (int i = 0; i < pathImages.length; i++) pathImages[i].toString()
       ];
 
       return item;
     }
   }
 
-  Map toJSON(){
+  Map toJSON() {
     return {
       'title': this.title,
     };
