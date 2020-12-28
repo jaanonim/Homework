@@ -19,7 +19,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     // TODO: remove this debug
-    hierarchy.last.MoveToFolder([
+    hierarchy.last.moveToFolder([
       FolderItem(title: "lol"),
       FileItem(title: "costam"),
       FileItem(title: "oek"),
@@ -63,7 +63,7 @@ class _HomeState extends State<Home> {
         onPressed: () {
           inputPopup(context, "Create new homework:", "Create", controller, () {
             HomeworkItem homeworkItem = FileItem(title: controller.text);
-            hierarchy.last.MoveToFolder([homeworkItem]);
+            hierarchy.last.moveToFolder([homeworkItem]);
             Navigator.pop(context);
             Navigator.pushNamed(context, "/editHomework",
                 arguments: {"homeworkItem": homeworkItem});

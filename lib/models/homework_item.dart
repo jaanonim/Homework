@@ -3,7 +3,7 @@ class FolderItem extends HomeworkItem {
 
   FolderItem({title}) : super(title: title);
 
-  MoveToFolder(List<HomeworkItem> items) {
+  moveToFolder(List<HomeworkItem> items) {
     items.forEach((item) {
       if (item.parent != null) {
         item.parent.children.remove(item);
@@ -13,11 +13,11 @@ class FolderItem extends HomeworkItem {
     });
   }
 
-  DeleteItem() {
+  deleteItem() {
     this.parent.children.remove(this);
     if (this.children.isNotEmpty) {
       this.children.forEach((child) {
-        child.DeleteItem();
+        child.deleteItem();
       });
     }
   }
@@ -37,7 +37,7 @@ abstract class HomeworkItem {
 
   HomeworkItem({this.title});
 
-  DeleteItem() {
+  deleteItem() {
     parent.children.remove(this);
   }
 }

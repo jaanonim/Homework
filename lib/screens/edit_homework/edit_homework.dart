@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:homework/models/homework_item.dart';
 import 'package:homework/models/image_loader.dart';
+import 'package:homework/models/pdf_creator.dart';
 
 class EditHomework extends StatefulWidget {
   @override
@@ -21,6 +24,20 @@ class _EditHomeworkState extends State<EditHomework> {
       appBar: AppBar(
         title: Text(homework.title),
         centerTitle: true,
+        actions: [
+          IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () {
+                print("share");
+              }),
+          IconButton(
+              icon: Icon(Icons.file_download),
+              onPressed: () async {
+                print("download");
+                generatePDF();
+                //TODO(n2one): create and download PDF
+              })
+        ],
       ),
       body: ListView(
         children: [
@@ -53,9 +70,10 @@ class _EditHomeworkState extends State<EditHomework> {
     );
   }
 
-  generatePage(var pathImage) {
+  generatePage(String pathImage) {
+    var file = new File(pathImage);
     return Stack(children: [
-      Image.asset(pathImage),
+      Image.file(file),
       Align(
         alignment: Alignment.topRight,
         child: Column(
@@ -96,5 +114,15 @@ class _EditHomeworkState extends State<EditHomework> {
     setState(() {
       items.add(path);
     });
+  }
+
+  void generatePDF() {
+    var pdf = new PdfCreator();
+
+    for(var src in items){
+      pdf.createNewPageSrc(src);
+    }
+    pdf.save(homework.title);
+
   }
 }
