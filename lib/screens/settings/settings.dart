@@ -19,13 +19,11 @@ class _SettingsState extends State<Settings> {
           trailing: Checkbox(
             value: true,
             onChanged: (val) {
-              setState(() {
-
-              });
+              setState(() {});
             },
           ),
           onTap: () {
-            setState(() {   });
+            setState(() {});
           },
         )
       ]),

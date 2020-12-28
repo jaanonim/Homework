@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:homework/components/yesNoPopup.dart';
+import 'package:homework/models/hierarchy.dart';
 import 'package:homework/models/homework_item.dart';
+import 'package:provider/provider.dart';
 
 class File extends StatelessWidget {
   final HomeworkItem homeworkItem;
-  final Function del;
-  final Function update;
 
-  File({this.homeworkItem, this.del, this.update});
+  File({this.homeworkItem});
 
   @override
   Widget build(BuildContext context) {
+    final Hierarchy hierarchy = Provider.of<Hierarchy>(context);
+
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, "/editHomework",
@@ -34,11 +37,10 @@ class File extends StatelessWidget {
                   Expanded(
                     child: MaterialButton(
                       onPressed: () {
-                        del(context,
+                        yesNoPopup(context,
                             "Are you sure you want to delete this homework?",
                             () {
-                          homeworkItem.DeleteItem();
-                          update();
+                          hierarchy.deleteItem(homeworkItem);
                         });
                       },
                       child: Icon(
