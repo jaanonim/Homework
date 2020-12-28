@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class FolderItem extends HomeworkItem {
   List<HomeworkItem> children = List();
 
@@ -13,15 +11,6 @@ class FolderItem extends HomeworkItem {
       item.parent = this;
       this.children.add(item);
     });
-  }
-
-  deleteItem() {
-    this.parent.children.remove(this);
-    if (this.children.isNotEmpty) {
-      this.children.forEach((child) {
-        child.deleteItem();
-      });
-    }
   }
 
   FolderItem haveChild(HomeworkItem item){
