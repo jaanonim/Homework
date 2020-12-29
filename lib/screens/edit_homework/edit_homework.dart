@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:homework/models/homework_item.dart';
 import 'package:homework/models/image_loader.dart';
 import 'package:homework/models/pdf_creator.dart';
+import 'package:share/share.dart';
 
 class EditHomework extends StatefulWidget {
   @override
@@ -28,14 +29,12 @@ class _EditHomeworkState extends State<EditHomework> {
           IconButton(
               icon: Icon(Icons.share),
               onPressed: () {
-                print("share");
+                sharePDF();
               }),
           IconButton(
               icon: Icon(Icons.file_download),
-              onPressed: () async {
-                print("download");
+              onPressed: () {
                 generatePDF();
-                //TODO(n2one): create and download PDF
               })
         ],
       ),
@@ -116,13 +115,21 @@ class _EditHomeworkState extends State<EditHomework> {
     });
   }
 
-  void generatePDF() {
+  Future<String> generatePDF() async {
     var pdf = new PdfCreator();
 
-    for(var src in items){
+    for (var src in items) {
       pdf.createNewPageSrc(src);
     }
-    pdf.save(homework.title);
+    return await pdf.save(homework.title);
+  }
 
+
+
+  Future<void> sharePDF() async {
+    String path = await generatePDF();
+
+    Share.shareFile(File(path),
+        subject: 'Homework Generator-'+homework.title);
   }
 }

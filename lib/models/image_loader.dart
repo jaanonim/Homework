@@ -18,6 +18,7 @@ class ImageLoader {
       return pickedFile.path;
     } else {
       print('No image selected.');
+      return null;
     }
   }
 }
