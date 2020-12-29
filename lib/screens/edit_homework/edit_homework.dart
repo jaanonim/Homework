@@ -58,7 +58,8 @@ class _EditHomeworkState extends State<EditHomework> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           var imagePath = await ImageLoader().getImageGallery();
-          addNewImage(imagePath);
+          if(imagePath != null)
+            addNewImage(imagePath);
         },
         child: Icon(
           Icons.add,
