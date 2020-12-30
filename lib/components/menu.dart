@@ -12,8 +12,7 @@ class Menu extends StatelessWidget {
             child: DrawerHeader(
               child: Center(
                 child: Text('U are the best!',
-                    style: Theme.of(context).textTheme.headline6
-                ),
+                    style: Theme.of(context).textTheme.headline6),
               ),
             ),
           ),
@@ -27,8 +26,7 @@ class Menu extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.delete),
             title: Text('Trash'),
-            onTap: () {
-            },
+            onTap: () {},
           ),
         ],
       ),

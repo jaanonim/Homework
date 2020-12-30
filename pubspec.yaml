@@ -27,9 +27,8 @@ dependencies:
     git:
       url: git://github.com/himanshusharma89/plugins.git
       path: packages/share
-  sqflite: any
-  path_provider: any
-  uuid: ^2.2.2
+  path_provider: ^1.6.24
+  provider: ^4.3.2+3
   drag_and_drop_gridview: ^1.0.4
   image_picker: ^0.6.7+17
   pdf: ^1.12.0
