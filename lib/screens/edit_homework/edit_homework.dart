@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:homework/models/homework_item.dart';
 import 'package:homework/models/image_loader.dart';
+import 'package:homework/models/pdf_creator.dart';
+import 'package:share/share.dart';
 
 class EditHomework extends StatefulWidget {
   @override
@@ -21,6 +25,18 @@ class _EditHomeworkState extends State<EditHomework> {
       appBar: AppBar(
         title: Text(homework.title),
         centerTitle: true,
+        actions: [
+          IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () {
+                sharePDF();
+              }),
+          IconButton(
+              icon: Icon(Icons.file_download),
+              onPressed: () {
+                generatePDF();
+              })
+        ],
       ),
       body: ListView(
         children: [
@@ -42,7 +58,8 @@ class _EditHomeworkState extends State<EditHomework> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           var imagePath = await ImageLoader().getImageGallery();
-          addNewImage(imagePath);
+          if(imagePath != null)
+            addNewImage(imagePath);
         },
         child: Icon(
           Icons.add,
@@ -53,9 +70,10 @@ class _EditHomeworkState extends State<EditHomework> {
     );
   }
 
-  generatePage(var pathImage) {
+  generatePage(String pathImage) {
+    var file = new File(pathImage);
     return Stack(children: [
-      Image.asset(pathImage),
+      Image.file(file),
       Align(
         alignment: Alignment.topRight,
         child: Column(
@@ -96,5 +114,23 @@ class _EditHomeworkState extends State<EditHomework> {
     setState(() {
       items.add(path);
     });
+  }
+
+  Future<String> generatePDF() async {
+    var pdf = new PdfCreator();
+
+    for (var src in items) {
+      pdf.createNewPageSrc(src);
+    }
+    return await pdf.save(homework.title);
+  }
+
+
+
+  Future<void> sharePDF() async {
+    String path = await generatePDF();
+
+    Share.shareFile(File(path),
+        subject: 'Homework Generator-'+homework.title);
   }
 }

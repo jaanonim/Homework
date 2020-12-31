@@ -23,10 +23,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  drag_and_drop_gridview: ^1.0.4
-  image_picker: ^0.6.7+17
+  share:
+    git:
+      url: git://github.com/himanshusharma89/plugins.git
+      path: packages/share
   path_provider: ^1.6.24
   provider: ^4.3.2+3
+  pdf: ^1.12.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
