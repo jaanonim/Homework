@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:homework/models/homework_item.dart';
 import 'package:homework/services/file_service.dart';
@@ -24,7 +23,7 @@ class Hierarchy with ChangeNotifier {
     notifyListeners();
   }
 
-  void SaveAndRefres() {
+  void saveAndRefresh() {
     writeItem(this.home);
     notifyListeners();
   }
@@ -47,7 +46,7 @@ class Hierarchy with ChangeNotifier {
   HomeworkItem createFile(String title) {
     HomeworkItem homeworkItem = FileItem(title: title);
     hierarchy.last.moveToFolder([homeworkItem]);
-    SaveAndRefres();
+    saveAndRefresh();
     return homeworkItem;
   }
 
@@ -57,21 +56,21 @@ class Hierarchy with ChangeNotifier {
       newFolder,
     ]);
     newFolder.moveToFolder(items);
-    SaveAndRefres();
+    saveAndRefresh();
   }
 
   void moveToFolder(FolderItem folder, HomeworkItem item) {
     folder.moveToFolder([item]);
-    SaveAndRefres();
+    saveAndRefresh();
   }
 
   void renameItem(HomeworkItem item, String title) {
     item.title = title;
-    SaveAndRefres();
+    saveAndRefresh();
   }
 
   void deleteItem(HomeworkItem item) {
     item.deleteItem();
-    SaveAndRefres();
+    saveAndRefresh();
   }
 }

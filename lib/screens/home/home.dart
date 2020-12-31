@@ -10,6 +10,8 @@ import 'package:provider/provider.dart';
 class Home extends StatelessWidget {
   final controller = TextEditingController();
 
+  Future<void> _getData() async {}
+
   @override
   Widget build(BuildContext context) {
     final Hierarchy hierarchy = Provider.of<Hierarchy>(context);
@@ -32,7 +34,7 @@ class Home extends StatelessWidget {
         ),
       ),
       drawer: Menu(),
-      body: Body(),
+      body: RefreshIndicator(child: Body(), onRefresh: _getData,),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           inputPopup(context, "Create new homework:", "Create", controller, () {
