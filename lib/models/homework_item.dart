@@ -13,6 +13,7 @@ class FolderItem extends HomeworkItem {
     });
   }
 
+
   FolderItem haveChild(HomeworkItem item) {
     children.forEach((element) {
       if (element == item) {
