@@ -10,20 +10,26 @@ Future<String> get _localPath async {
   return directory.path;
 }
 
-Future<File> get _localFile async {
+Future<File> get _localFileHomeworkItem async {
   final path = await _localPath;
   return File('$path/hierarchy.json');
 }
 
+Future<File> get _localFileSettingsData async {
+  final path = await _localPath;
+  return File('$path/settings.json');
+}
+
+
 Future<File> writeItem(HomeworkItem item) async {
-  final file = await _localFile;
+  final file = await _localFileHomeworkItem;
 
   return file.writeAsString(jsonEncode(item.toJSON()));
 }
 
 Future<HomeworkItem> readItem() async {
   try {
-    final file = await _localFile;
+    final file = await _localFileHomeworkItem;
 
     String contents = await file.readAsString();
 
@@ -37,22 +43,20 @@ Future<HomeworkItem> readItem() async {
 }
 
 Future<File> writeSettings(SettingsData data) async {
-  // TODO: remove this todo
-  return null;
-  final file = await _localFile;
+  final file = await _localFileSettingsData;
 
-  return file.writeAsString(jsonEncode(data));
+  return file.writeAsString(jsonEncode(data.toJSON()));
 }
 
-Future<HomeworkItem> readSettings() async {
+Future<SettingsData> readSettings() async {
   try {
-    final file = await _localFile;
+    final file = await _localFileSettingsData;
 
     String contents = await file.readAsString();
 
     Map data = jsonDecode(contents);
 
-    return HomeworkItem.fromJSON(data, null);
+    return SettingsData.fromJSON(data);
   } catch (e) {
     print(e);
     return null;

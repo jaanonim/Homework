@@ -59,7 +59,6 @@ class Body extends StatelessWidget {
               hierarchy.now.children[newIndex],
               hierarchy.now.children[oldIndex],
             ]);
-            Navigator.pop(context);
           });
         }
       },
