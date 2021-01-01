@@ -13,6 +13,7 @@ class SwitchSetting extends StatelessWidget {
     return MergeSemantics(
       child: ListTile(
         title: Text(title),
+        subtitle: subtitle != null ? Text(subtitle):null,
         trailing: CupertinoSwitch(
           value: value,
           onChanged: (bool value) {

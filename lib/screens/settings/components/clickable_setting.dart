@@ -10,7 +10,7 @@ class ClickableSetting extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(title),
-      subtitle: Text(subtitle),
+      subtitle: subtitle != null ? Text(subtitle):null,
       onTap: () {
         onClick();
       },

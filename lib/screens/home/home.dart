@@ -6,6 +6,7 @@ import 'package:homework/models/homework_item.dart';
 import 'package:homework/screens/home/components/body.dart';
 import 'package:homework/screens/home/components/hierarchy_element.dart';
 import 'package:provider/provider.dart';
+import 'package:homework/models/settings_data.dart';
 
 class Home extends StatelessWidget {
   final controller = TextEditingController();
@@ -13,6 +14,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Hierarchy hierarchy = Provider.of<Hierarchy>(context);
+    final SettingsData data = Provider.of<SettingsData>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -35,6 +37,9 @@ class Home extends StatelessWidget {
       body: Body(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          if (data.automaticFileName) {
+            controller.text = data.defaultFileName;
+          }
           inputPopup(context, "Create new homework:", "Create", controller, () {
             HomeworkItem item = hierarchy.createFile(controller.text);
             Navigator.pushNamed(context, "/editHomework",

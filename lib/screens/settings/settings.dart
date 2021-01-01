@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:homework/components/inputPopup.dart';
 import 'package:homework/screens/settings/components/switch_setting.dart';
 import 'package:homework/screens/settings/components/clickable_setting.dart';
+import 'package:intl/intl.dart';
 
 class Settings extends StatelessWidget {
   @override
@@ -24,6 +25,7 @@ class Settings extends StatelessWidget {
                 data.boolTheme = value;
               },
             ),
+            Divider(),
             SwitchSetting(
               title: 'Automatic file name',
               value: data.automaticFileName,
@@ -37,11 +39,34 @@ class Settings extends StatelessWidget {
               onClick: () {
                 final controller = TextEditingController();
                 controller.text = data.defaultFileName;
-                inputPopup(context, "Default name for file", "Ok", controller, (){
+                inputPopup(context, "Default name for file", "Ok", controller,
+                    () {
                   data.defaultFileName = controller.text;
                 });
               },
-            )
+            ),
+            Divider(),
+            SwitchSetting(
+              title: 'Custom markup',
+              subtitle:
+                  'Allows you to insert special markups into for e.g. filenames',
+              value: data.customMarkup,
+              switchValue: (bool value) {
+                data.customMarkup=value;
+              },
+            ),
+            ClickableSetting(
+              title: 'Date format',
+              subtitle: data.dateFormat,
+              onClick: () {
+                final controller = TextEditingController();
+                controller.text = data.dateFormat;
+                inputPopup(context, "Default name for file", "Ok", controller,
+                    () {
+                  data.dateFormat = controller.text;
+                });
+              },
+            ),
           ],
         ));
   }
