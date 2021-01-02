@@ -7,6 +7,7 @@ import 'package:homework/screens/home/components/body.dart';
 import 'package:homework/screens/home/components/hierarchy_element.dart';
 import 'package:provider/provider.dart';
 import 'package:homework/models/settings_data.dart';
+import 'package:homework/models/custom_markups.dart';
 
 class Home extends StatelessWidget {
   final controller = TextEditingController();
@@ -41,7 +42,7 @@ class Home extends StatelessWidget {
             controller.text = data.defaultFileName;
           }
           inputPopup(context, "Create new homework:", "Create", controller, () {
-            HomeworkItem item = hierarchy.createFile(controller.text);
+            HomeworkItem item = hierarchy.createFile(data.customMarkup ? useMarkups(controller.text, data) : controller.text);
             Navigator.pushNamed(context, "/editHomework",
                 arguments: {"homeworkItem": item});
           });

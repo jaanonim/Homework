@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:homework/services/file_service.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SettingsData with ChangeNotifier {
   SettingsData(bool readFormFile,
@@ -70,6 +71,7 @@ class SettingsData with ChangeNotifier {
     _dateFormat = dateFormat;
     saveAndRefresh();
   }
+  DateFormat get getDateFormat => DateFormat(_dateFormat);
 
   void saveAndRefresh() {
     writeSettings(this);
