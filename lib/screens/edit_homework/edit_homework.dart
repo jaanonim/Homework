@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:homework/models/homework_item.dart';
-import 'package:homework/models/image_loader.dart';
 import 'package:homework/models/pdf_creator.dart';
+import 'package:homework/screens/edit_homework/components/add_document_element_menu.dart';
 import 'package:share/share.dart';
 
 class EditHomework extends StatefulWidget {
@@ -11,10 +11,12 @@ class EditHomework extends StatefulWidget {
   _EditHomeworkState createState() => _EditHomeworkState();
 }
 
-class _EditHomeworkState extends State<EditHomework> {
+class _EditHomeworkState extends State<EditHomework>
+    with SingleTickerProviderStateMixin {
   Map data = {};
   var items = [];
   FileItem homework;
+
 
   @override
   Widget build(BuildContext context) {
@@ -22,52 +24,40 @@ class _EditHomeworkState extends State<EditHomework> {
     homework = data["homeworkItem"];
     items = homework.pathImages;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(homework.title),
-        centerTitle: true,
-        actions: [
-          IconButton(
-              icon: Icon(Icons.share),
-              onPressed: () {
-                sharePDF();
-              }),
-          IconButton(
-              icon: Icon(Icons.file_download),
-              onPressed: () {
-                generatePDF();
-              })
-        ],
-      ),
-      body: ListView(
-        children: [
-          for (final i in items)
-            Dismissible(
-              key: ValueKey(i),
-              onDismissed: (direction) {
-                setState(() {
-                  items.remove(i);
-                });
-              },
-              child: ListTile(
-                  title: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: generatePage(i))),
-            )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          var imagePath = await ImageLoader().getImageGallery();
-          if(imagePath != null)
-            addNewImage(imagePath);
-        },
-        child: Icon(
-          Icons.add,
-          color: Colors.white,
-          size: 40,
+        appBar: AppBar(
+          title: Text(homework.title),
+          centerTitle: true,
+          actions: [
+            IconButton(
+                icon: Icon(Icons.share),
+                onPressed: () {
+                  sharePDF();
+                }),
+            IconButton(
+                icon: Icon(Icons.file_download),
+                onPressed: () {
+                  generatePDF();
+                })
+          ],
         ),
-      ),
-    );
+        body: ListView(
+          children: [
+            for (final i in items)
+              Dismissible(
+                key: ValueKey(i),
+                onDismissed: (direction) {
+                  setState(() {
+                    items.remove(i);
+                  });
+                },
+                child: ListTile(
+                    title: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: generatePage(i))),
+              )
+          ],
+        ),
+        floatingActionButton: AddDocumentElementMenu());
   }
 
   generatePage(String pathImage) {
@@ -125,12 +115,10 @@ class _EditHomeworkState extends State<EditHomework> {
     return await pdf.save(homework.title);
   }
 
-
-
   Future<void> sharePDF() async {
     String path = await generatePDF();
 
     Share.shareFile(File(path),
-        subject: 'Homework Generator-'+homework.title);
+        subject: 'Homework Generator-' + homework.title);
   }
 }
