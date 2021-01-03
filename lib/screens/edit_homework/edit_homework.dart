@@ -10,8 +10,7 @@ class EditHomework extends StatefulWidget {
   _EditHomeworkState createState() => _EditHomeworkState();
 }
 
-class _EditHomeworkState extends State<EditHomework>
-    with SingleTickerProviderStateMixin {
+class _EditHomeworkState extends State<EditHomework> {
   Map _data = {};
   DocumentEditor _editor;
 
