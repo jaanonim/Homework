@@ -13,7 +13,6 @@ class ImageLoader {
 
   Future<String> getImage(source) async {
     final pickedFile = await picker.getImage(source: source);
-
     if (pickedFile != null) {
       return pickedFile.path;
     } else {

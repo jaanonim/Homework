@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AddDocumentElementMenu extends StatefulWidget {
-  final Function() onPressed;
-  final String tooltip;
-  final IconData icon;
+  final Function addCameraPhoto,addGalleryPhoto;
 
-  AddDocumentElementMenu({this.onPressed, this.tooltip, this.icon});
+  AddDocumentElementMenu({this.addCameraPhoto,this.addGalleryPhoto});
 
   @override
-  _AddDocumentElementMenuState createState() => _AddDocumentElementMenuState();
+  _AddDocumentElementMenuState createState() =>
+      _AddDocumentElementMenuState(addCameraPhoto: addCameraPhoto,addGalleryPhoto: addGalleryPhoto);
 }
 
 class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
@@ -20,14 +19,17 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
   Animation<double> _translateButton;
   Curve _curve = Curves.easeOut;
   double _fabHeight = 56.0;
+  Function addCameraPhoto,addGalleryPhoto;
+
+  _AddDocumentElementMenuState({this.addCameraPhoto,this.addGalleryPhoto});
 
   @override
   initState() {
     _animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500))
-          ..addListener(() {
-            setState(() {});
-          });
+    AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+      ..addListener(() {
+        setState(() {});
+      });
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _buttonColor = ColorTween(
@@ -72,24 +74,22 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
 
   Widget addGallery() {
     return Container(
-      child: FloatingActionButton(
-        onPressed: null,
-        tooltip: 'Add',
-        heroTag: "gallery",
-        child: Icon(Icons.add_photo_alternate),
-      ),
-    );
+        child: FloatingActionButton(
+          onPressed: addGalleryPhoto,
+          tooltip: 'Add',
+          heroTag: "gallery",
+          child: Icon(Icons.add_photo_alternate),
+        ));
   }
 
   Widget addCamera() {
     return Container(
       child: FloatingActionButton(
-        onPressed: null,
-        tooltip: 'Image',
-        heroTag: "camera",
-        child: Icon(Icons.add_a_photo),
-      ),
-    );
+          onPressed: addCameraPhoto,
+          tooltip: 'Image',
+          heroTag: "camera",
+          child: Icon(Icons.add_a_photo),
+    ),);
   }
 
   Widget toggle() {
@@ -115,7 +115,7 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
         Transform(
           transform: Matrix4.translationValues(
             0.0,
-            _translateButton.value*2.0,
+            _translateButton.value * 2.0,
             0.0,
           ),
           child: addGallery(),
@@ -123,7 +123,7 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
         Transform(
           transform: Matrix4.translationValues(
             0.0,
-            _translateButton.value*1.0,
+            _translateButton.value * 1.0,
             0.0,
           ),
           child: addCamera(),
