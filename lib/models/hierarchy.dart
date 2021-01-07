@@ -12,6 +12,7 @@ class Hierarchy with ChangeNotifier {
     readItem().then((h) {
       if (h != null) {
         hierarchy.first = h;
+        notifyListeners();
       } else {
         print("Cannot read file!");
       }
