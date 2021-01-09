@@ -72,7 +72,6 @@ class Folder extends StatelessWidget {
                                 () {
                               hierarchy.renameItem(
                                   homeworkItem, controller.text);
-                              Navigator.pop(context);
                             });
                           },
                           child: Icon(

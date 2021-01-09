@@ -72,6 +72,7 @@ class SettingsData with ChangeNotifier {
     _dateFormat = dateFormat;
     saveAndRefresh();
   }
+
   DateFormat get getDateFormat => DateFormat(_dateFormat);
 
   void saveAndRefresh() {
