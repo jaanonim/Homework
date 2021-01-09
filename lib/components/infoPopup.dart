@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-inputPopup(BuildContext context, String title, String buttonText,
-    TextEditingController controller, Function create) {
+infoPopup(BuildContext context, String title, String content, String buttonText) {
   return showDialog(
       context: context,
       builder: (context) {
@@ -14,24 +12,11 @@ inputPopup(BuildContext context, String title, String buttonText,
             ),
           ),
           contentPadding: EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-          content: TextField(
-            autofocus: true,
-            controller: controller,
-            style: Theme.of(context).textTheme.bodyText1,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.fromLTRB(2, 5, 2, 5),
-              isDense: true,
-            ),
-            onSubmitted: (value) {
-              Navigator.pop(context);
-              create();
-            },
-          ),
+          content: Text(content),
           actions: [
             MaterialButton(
               onPressed: () {
                 Navigator.pop(context);
-                create();
               },
               elevation: 5,
               child: Text(buttonText),

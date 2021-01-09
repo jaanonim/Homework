@@ -21,8 +21,8 @@ yesNoPopup(BuildContext context, String title, Function onYes) {
             ),
             MaterialButton(
               onPressed: () {
-                onYes();
                 Navigator.pop(context);
+                onYes();
               },
               elevation: 5,
               child: Text('Yes'),
