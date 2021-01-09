@@ -49,8 +49,7 @@ class Home extends StatelessWidget {
         },
         child: Icon(
           Icons.add,
-          color: Colors.white,
-          size: 40,
+          size: 32,
         ),
       ),
     );

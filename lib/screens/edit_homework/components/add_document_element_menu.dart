@@ -26,15 +26,15 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
   @override
   initState() {
     _animationController =
-    AnimationController(vsync: this, duration: Duration(milliseconds: 500))
+    AnimationController(vsync: this, duration: Duration(milliseconds: 250))
       ..addListener(() {
         setState(() {});
       });
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _buttonColor = ColorTween(
-      begin: Colors.blue,
-      end: Colors.red,
+      begin: Colors.cyan[700],
+      end: Colors.red[700],
     ).animate(CurvedAnimation(
       parent: _animationController,
       curve: Interval(
