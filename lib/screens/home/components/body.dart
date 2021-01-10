@@ -71,6 +71,19 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final Hierarchy hierarchy = Provider.of<Hierarchy>(context);
 
+    if (hierarchy.now.children.length == 0 && hierarchy.isHome) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("There's nothing here yet ...", style: Theme.of(context).textTheme.headline6,),
+            SizedBox(height: 10,),
+            Text("Click plus button to create your first homework."),
+          ],
+        ),
+      );
+    }
+
     return DragAndDropGridView(
       controller: ScrollController(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -79,17 +92,17 @@ class Body extends StatelessWidget {
       ),
       padding: EdgeInsets.all(20),
       itemBuilder: (context, index) =>
-          getItem(index, false, hierarchy, hierarchy.now == hierarchy.home),
-      itemCount: hierarchy.now == hierarchy.home
+          getItem(index, false, hierarchy, hierarchy.isHome),
+      itemCount: hierarchy.isHome
           ? hierarchy.now.children.length
           : hierarchy.now.children.length + 1,
       isCustomChildWhenDragging: true,
       childWhenDragging: (index) =>
-          getItem(index, true, hierarchy, hierarchy.now == hierarchy.home),
+          getItem(index, true, hierarchy, hierarchy.isHome),
       isCustomFeedback: true,
       feedback: (index) => ItemFeedback(
-          homeworkItem: hierarchy.now
-              .children[(hierarchy.now == hierarchy.home) ? index : index - 1]),
+          homeworkItem:
+              hierarchy.now.children[(hierarchy.isHome) ? index : index - 1]),
       onWillAccept: (oldIndex, newIndex) {
         if (oldIndex == newIndex) {
           return false;
@@ -97,7 +110,7 @@ class Body extends StatelessWidget {
         return true;
       },
       onReorder: (oldIndex, newIndex) {
-        if (hierarchy.now != hierarchy.home) {
+        if (!hierarchy.isHome) {
           oldIndex--;
           newIndex--;
         }

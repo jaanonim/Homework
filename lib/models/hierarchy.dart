@@ -7,6 +7,7 @@ class Hierarchy with ChangeNotifier {
 
   FolderItem get home => hierarchy.first;
   FolderItem get now => hierarchy.last;
+  bool get isHome => now == home;
 
   Hierarchy() {
     readItem().then((h) {
