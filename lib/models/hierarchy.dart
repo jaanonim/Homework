@@ -28,7 +28,6 @@ class Hierarchy with ChangeNotifier {
   }
 
   void saveAndRefresh() {
-    print(this.home.toJSON());
     writeItem(this.home);
     notifyListeners();
   }
