@@ -81,8 +81,7 @@ abstract class HomeworkItem {
       FileItem item = FileItem(title: map['title']);
       item.parent = parent;
 
-      Iterable i = map['pathImages'];
-      List<Map> pathImages = List<Map>.from(i).map((model) => model).toList();
+      List<dynamic> pathImages = map['pathImages'].toList();
       item.pathImages = [
         for (int i = 0; i < pathImages.length; i++) pathImages[i].toString()
       ];
