@@ -37,7 +37,6 @@ class DocumentEditor {
 
   addNewImage(String path) {
     items.add(path);
-    print(items);
     saveFunc();
   }
 

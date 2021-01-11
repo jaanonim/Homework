@@ -32,7 +32,6 @@ Future<HomeworkItem> readItem() async {
     final file = await _localFileHomeworkItem;
 
     String contents = await file.readAsString();
-    print(contents);
     Map data = jsonDecode(contents);
 
     return HomeworkItem.fromJSON(data, null);
