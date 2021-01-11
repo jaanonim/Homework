@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:homework/models/hierarchy.dart';
 import 'package:homework/models/image_loader.dart';
 import 'package:homework/screens/edit_homework/components/add_document_element_menu.dart';
 import 'package:homework/screens/edit_homework/components/document_editor.dart';
+import 'package:provider/provider.dart';
 
 class EditHomework extends StatefulWidget {
   @override
@@ -17,8 +20,9 @@ class _EditHomeworkState extends State<EditHomework> {
   @override
   Widget build(BuildContext context) {
     _data = ModalRoute.of(context).settings.arguments;
+    Hierarchy hierarchy = Provider.of<Hierarchy>(context);
     var title = _data["homeworkItem"].title;
-    _editor = DocumentEditor(_data["homeworkItem"]);
+    _editor = DocumentEditor(_data["homeworkItem"], hierarchy.saveAndRefresh);
 
     return Scaffold(
         appBar: AppBar(
@@ -28,12 +32,30 @@ class _EditHomeworkState extends State<EditHomework> {
             IconButton(
                 icon: Icon(Icons.share),
                 onPressed: () {
+                  Flushbar(
+                    message: 'Start Sharing',
+                    duration: Duration(seconds: 3),
+                    backgroundColor: Theme.of(context).accentColor,
+                    leftBarIndicatorColor: Theme.of(context).primaryColor,
+                  )..show(context);
                   _editor.sharePDF();
                 }),
             IconButton(
                 icon: Icon(Icons.file_download),
-                onPressed: () {
-                  _editor.generatePDF();
+                onPressed: () async {
+                  Flushbar(
+                    message: 'Downloading...',
+                    backgroundColor: Theme.of(context).accentColor,
+                    leftBarIndicatorColor: Theme.of(context).primaryColor,
+                    duration: Duration(seconds: 3),
+                  )..show(context);
+                  await _editor.generatePDF();
+                  Flushbar(
+                    message: 'Downloaded',
+                    backgroundColor: Theme.of(context).accentColor,
+                    leftBarIndicatorColor: Theme.of(context).primaryColor,
+                    duration: Duration(seconds: 4),
+                  )..show(context);
                 })
           ],
         ),
@@ -60,7 +82,7 @@ class _EditHomeworkState extends State<EditHomework> {
 
   Future<void> addCameraPhoto() async {
     String src = await ImageLoader().getImageCamera();
-    if(src != null){
+    if (src != null) {
       setState(() {
         _editor.addNewImage(src);
       });
@@ -69,7 +91,7 @@ class _EditHomeworkState extends State<EditHomework> {
 
   Future<void> addGalleryPhoto() async {
     String src = await ImageLoader().getImageGallery();
-    if(src != null){
+    if (src != null) {
       setState(() {
         _editor.addNewImage(src);
       });

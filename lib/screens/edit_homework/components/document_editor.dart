@@ -7,10 +7,12 @@ import 'package:share/share.dart';
 class DocumentEditor {
   var items = [];
   var title;
+  Function saveFunc;
 
-  DocumentEditor(FileItem homework) {
+  DocumentEditor(FileItem homework, var saveFunction) {
     items = homework.pathImages;
     title = homework.title;
+    saveFunc = saveFunction;
   }
 
   List<String> getPages() {
@@ -19,6 +21,8 @@ class DocumentEditor {
 
   void removePage(String i) {
     if (items.contains(i)) items.remove(i);
+
+    saveFunc();
   }
 
   swapPages(var object, bool isUp) {
@@ -28,10 +32,13 @@ class DocumentEditor {
     var temp = items[oldIndex];
     items.removeAt(oldIndex);
     items.insert(newIndex, temp);
+    saveFunc();
   }
 
   addNewImage(String path) {
     items.add(path);
+    print(items);
+    saveFunc();
   }
 
   Future<String> generatePDF() async {
@@ -40,6 +47,7 @@ class DocumentEditor {
     for (var src in items) {
       pdf.createNewPageSrc(src);
     }
+
     return await pdf.save(title);
   }
 
