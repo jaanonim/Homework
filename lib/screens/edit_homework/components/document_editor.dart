@@ -1,25 +1,27 @@
 import 'dart:io';
 
+import 'package:homework/models/document_elements/document_element.dart';
+import 'package:homework/models/document_elements/image_doc_element.dart';
 import 'package:homework/models/homework_item.dart';
 import 'package:homework/models/pdf_creator.dart';
 import 'package:share/share.dart';
 
 class DocumentEditor {
-  var items = [];
+  List<DocumentElement> items = [];
   var title;
   Function saveFunc;
 
   DocumentEditor(FileItem homework, var saveFunction) {
-    items = homework.pathImages;
+    items = homework.docElements;
     title = homework.title;
     saveFunc = saveFunction;
   }
 
-  List<String> getPages() {
+  List<DocumentElement> getPages() {
     return items;
   }
 
-  void removePage(String i) {
+  void removePage(DocumentElement i) {
     if (items.contains(i)) items.remove(i);
 
     saveFunc();
@@ -35,16 +37,16 @@ class DocumentEditor {
     saveFunc();
   }
 
-  addNewImage(String path) {
+  addNewImage(ImageDocElement path) {
     items.add(path);
     saveFunc();
   }
 
   Future<String> generatePDF() async {
     var pdf = new PdfCreator();
-
-    for (var src in items) {
-      pdf.createNewPageSrc(src);
+    List<ImageDocElement> elements = items.cast<ImageDocElement>();
+    for (var src in elements) {
+      pdf.createNewPageSrc(src.imageSrc);
     }
 
     return await pdf.save(title);

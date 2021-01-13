@@ -1,3 +1,5 @@
+import 'document_elements/document_element.dart';
+
 class FolderItem extends HomeworkItem {
   List<HomeworkItem> children = List();
 
@@ -12,7 +14,6 @@ class FolderItem extends HomeworkItem {
       this.children.add(item);
     });
   }
-
 
   FolderItem haveChild(HomeworkItem item) {
     children.forEach((element) {
@@ -41,16 +42,16 @@ class FolderItem extends HomeworkItem {
 }
 
 class FileItem extends HomeworkItem {
-  List<String> pathImages;
+  List<DocumentElement> docElements;
 
   FileItem({title}) : super(title: title) {
-    pathImages = new List<String>();
+    docElements = new List<DocumentElement>();
   }
 
   @override
   Map toJSON() {
     Map m = super.toJSON();
-    m.addAll({'pathImages': pathImages});
+    m.addAll({'docElements': [for(var element in docElements) element.toJSON()]});
     return m;
   }
 }
@@ -80,12 +81,9 @@ abstract class HomeworkItem {
     } else {
       FileItem item = FileItem(title: map['title']);
       item.parent = parent;
-
-      List<dynamic> pathImages = map['pathImages'].toList();
-      item.pathImages = [
-        for (int i = 0; i < pathImages.length; i++) pathImages[i].toString()
-      ];
-
+      Iterable i = map['docElements'];
+      List<Map> list = List<Map>.from(i).map((model) => model).toList();
+      item.docElements = [for(var l in list) DocumentElement.fromJSON(l)];
       return item;
     }
   }

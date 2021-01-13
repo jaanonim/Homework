@@ -1,7 +1,7 @@
-import 'dart:io';
-
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:homework/models/document_elements/document_element.dart';
+import 'package:homework/models/document_elements/image_doc_element.dart';
 import 'package:homework/models/hierarchy.dart';
 import 'package:homework/models/image_loader.dart';
 import 'package:homework/screens/edit_homework/components/add_document_element_menu.dart';
@@ -84,7 +84,7 @@ class _EditHomeworkState extends State<EditHomework> {
     String src = await ImageLoader().getImageCamera();
     if (src != null) {
       setState(() {
-        _editor.addNewImage(src);
+        _editor.addNewImage(ImageDocElement(src));
       });
     }
   }
@@ -93,15 +93,15 @@ class _EditHomeworkState extends State<EditHomework> {
     String src = await ImageLoader().getImageGallery();
     if (src != null) {
       setState(() {
-        _editor.addNewImage(src);
+        _editor.addNewImage(ImageDocElement(src));
       });
     }
   }
 
-  generatePage(String pathImage) {
-    var file = new File(pathImage);
+  generatePage(DocumentElement pathImage) {
+
     return Stack(children: [
-      Image.file(file),
+      Image.file(pathImage.generatePage()),
       Align(
         alignment: Alignment.topRight,
         child: Column(
