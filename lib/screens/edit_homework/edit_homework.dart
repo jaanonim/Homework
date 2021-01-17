@@ -1,7 +1,9 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:homework/components/inputPopup.dart';
 import 'package:homework/models/document_elements/document_element.dart';
 import 'package:homework/models/document_elements/image_doc_element.dart';
+import 'package:homework/models/document_elements/text_doc_element.dart';
 import 'package:homework/models/hierarchy.dart';
 import 'package:homework/models/image_loader.dart';
 import 'package:homework/screens/edit_homework/components/add_document_element_menu.dart';
@@ -16,11 +18,15 @@ class EditHomework extends StatefulWidget {
 class _EditHomeworkState extends State<EditHomework> {
   Map _data = {};
   DocumentEditor _editor;
-
+  final controller = TextEditingController();
+  Hierarchy hierarchy;
   @override
   Widget build(BuildContext context) {
-    _data = ModalRoute.of(context).settings.arguments;
-    Hierarchy hierarchy = Provider.of<Hierarchy>(context);
+    _data = ModalRoute
+        .of(context)
+        .settings
+        .arguments;
+    hierarchy = Provider.of<Hierarchy>(context);
     var title = _data["homeworkItem"].title;
     _editor = DocumentEditor(_data["homeworkItem"], hierarchy.saveAndRefresh);
 
@@ -35,9 +41,14 @@ class _EditHomeworkState extends State<EditHomework> {
                   Flushbar(
                     message: 'Start Sharing',
                     duration: Duration(seconds: 3),
-                    backgroundColor: Theme.of(context).accentColor,
-                    leftBarIndicatorColor: Theme.of(context).primaryColor,
-                  )..show(context);
+                    backgroundColor: Theme
+                        .of(context)
+                        .accentColor,
+                    leftBarIndicatorColor: Theme
+                        .of(context)
+                        .primaryColor,
+                  )
+                    ..show(context);
                   _editor.sharePDF();
                 }),
             IconButton(
@@ -45,17 +56,27 @@ class _EditHomeworkState extends State<EditHomework> {
                 onPressed: () async {
                   Flushbar(
                     message: 'Downloading...',
-                    backgroundColor: Theme.of(context).accentColor,
-                    leftBarIndicatorColor: Theme.of(context).primaryColor,
+                    backgroundColor: Theme
+                        .of(context)
+                        .accentColor,
+                    leftBarIndicatorColor: Theme
+                        .of(context)
+                        .primaryColor,
                     duration: Duration(seconds: 3),
-                  )..show(context);
+                  )
+                    ..show(context);
                   await _editor.generatePDF();
                   Flushbar(
                     message: 'Downloaded',
-                    backgroundColor: Theme.of(context).accentColor,
-                    leftBarIndicatorColor: Theme.of(context).primaryColor,
+                    backgroundColor: Theme
+                        .of(context)
+                        .accentColor,
+                    leftBarIndicatorColor: Theme
+                        .of(context)
+                        .primaryColor,
                     duration: Duration(seconds: 4),
-                  )..show(context);
+                  )
+                    ..show(context);
                 })
           ],
         ),
@@ -77,7 +98,9 @@ class _EditHomeworkState extends State<EditHomework> {
           ],
         ),
         floatingActionButton: AddDocumentElementMenu(
-            addCameraPhoto: addCameraPhoto, addGalleryPhoto: addGalleryPhoto));
+            addCameraPhoto: addCameraPhoto,
+            addGalleryPhoto: addGalleryPhoto,
+            addTextElement: addText));
   }
 
   Future<void> addCameraPhoto() async {
@@ -98,10 +121,21 @@ class _EditHomeworkState extends State<EditHomework> {
     }
   }
 
-  generatePage(DocumentElement pathImage) {
+  Future<void> addText() async {
+    inputPopup(context, "New text", "CREATE", controller, () {
+      setState(() {
+        _editor.addNewText(TextDocElement(controller.text));
+      });
+    });
+  }
 
+  generatePage(DocumentElement pathImage) {
     return Stack(children: [
-      Image.file(pathImage.generatePage()),
+      GestureDetector(
+          onTap: () {
+              pathImage.onClick(context,hierarchy.saveAndRefresh);
+          },
+          child: pathImage.generatePage()),
       Align(
         alignment: Alignment.topRight,
         child: Column(

@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:homework/models/document_elements/document_element.dart';
 import 'package:homework/models/document_elements/image_doc_element.dart';
+import 'package:homework/models/document_elements/text_doc_element.dart';
 import 'package:homework/models/homework_item.dart';
 import 'package:homework/models/pdf_creator.dart';
 import 'package:share/share.dart';
@@ -42,11 +42,22 @@ class DocumentEditor {
     saveFunc();
   }
 
+  void addNewText(TextDocElement element) {
+    items.add(element);
+    saveFunc();
+  }
+
   Future<String> generatePDF() async {
     var pdf = new PdfCreator();
-    List<ImageDocElement> elements = items.cast<ImageDocElement>();
-    for (var src in elements) {
-      pdf.createNewPageSrc(src.imageSrc);
+    var tempText = "";
+    for (var src in items) {
+      if (src is TextDocElement) {
+        tempText += (src as TextDocElement).text;
+        continue;
+      }
+      var img = src as ImageDocElement;
+      pdf.createNewPageSrc(tempText, img.imageSrc);
+      tempText = "";
     }
 
     return await pdf.save(title);

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:homework/models/document_elements/document_element.dart';
 
 class ImageDocElement extends DocumentElement {
@@ -10,12 +11,17 @@ class ImageDocElement extends DocumentElement {
   }
 
   @override
-  File generatePage() {
-    return File(imageSrc);
+  Widget generatePage() {
+    return Image.file(File(imageSrc));
   }
 
   @override
   Map toJSON() {
     return {"imageSrc": imageSrc};
+  }
+
+  @override
+  void onClick(context,saveFunction) {
+    return;
   }
 }
