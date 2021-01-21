@@ -1,5 +1,7 @@
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:homework/components/yesNoPopup.dart';
+import 'package:homework/models/document_editor.dart';
 import 'package:homework/models/hierarchy.dart';
 import 'package:homework/models/homework_item.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +14,8 @@ class File extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Hierarchy hierarchy = Provider.of<Hierarchy>(context);
+
+    DocumentEditor _editor = DocumentEditor(homeworkItem, hierarchy.saveAndRefresh);
 
     return InkWell(
       onTap: () {
@@ -54,7 +58,13 @@ class File extends StatelessWidget {
                   Expanded(
                     child: MaterialButton(
                       onPressed: () {
-                        // TODO: Zrobic udostepninie zadania
+                        Flushbar(
+                          message: 'Start Sharing',
+                          duration: Duration(seconds: 3),
+                          backgroundColor: Theme.of(context).accentColor,
+                          leftBarIndicatorColor: Theme.of(context).primaryColor,
+                        )..show(context);
+                        _editor.sharePDF();
                       },
                       child: Icon(
                         Icons.share,

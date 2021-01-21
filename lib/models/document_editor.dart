@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:homework/models/homework_item.dart';
 import 'package:homework/models/pdf_creator.dart';
 import 'package:share/share.dart';
@@ -41,13 +40,15 @@ class DocumentEditor {
   }
 
   Future<String> generatePDF() async {
+
     var pdf = new PdfCreator();
 
     for (var src in items) {
       pdf.createNewPageSrc(src);
     }
 
-    return await pdf.save(title);
+    String path = await pdf.save(title);
+    return path;
   }
 
   Future<void> sharePDF() async {

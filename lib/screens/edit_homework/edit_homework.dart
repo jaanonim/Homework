@@ -1,12 +1,11 @@
 import 'dart:io';
-
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:homework/models/hierarchy.dart';
 import 'package:homework/models/image_loader.dart';
 import 'package:homework/screens/edit_homework/components/add_document_element_menu.dart';
-import 'package:homework/screens/edit_homework/components/document_editor.dart';
 import 'package:provider/provider.dart';
+import 'package:homework/models/document_editor.dart';
 
 class EditHomework extends StatefulWidget {
   @override
