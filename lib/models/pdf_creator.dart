@@ -19,8 +19,17 @@ class PdfCreator {
     createNewPageByte(text, File(imageSrc).readAsBytesSync());
   }
 
+  void createNewPageText(String text) {
+    doc.addPage(
+      pw.Page(
+        build: (pw.Context context) =>
+            pw.Center(child: pw.Text(text, style: pw.TextStyle(fontSize: 30))
+                ),
+      ),
+    );
+  }
+
   void createNewPageByte(String text, Uint8List file) {
-    print(doc);
     final image = PdfImage.file(
       doc.document,
       bytes: file,
@@ -30,16 +39,16 @@ class PdfCreator {
         build: (pw.Context context) => pw.Center(
           child: pw.Stack(children: [
             pw.Image(image, fit: pw.BoxFit.fill),
-            pw.Align(alignment: pw.Alignment.topCenter, child: pw.Text(text,style: pw.TextStyle(fontSize: 30))),
+            pw.Align(
+                alignment: pw.Alignment.topCenter,
+                child: pw.Text(text, style: pw.TextStyle(fontSize: 30))),
           ]),
-          // pw.Text(text, textAlign: pw.TextAlign.center),
         ),
       ),
     );
   }
 
   Future<String> save(String dirName) async {
-    //TODO(anyone): chcek if the dirname is safe
 
     String dirPath = (await _localPath) + "/" + dirName + ".pdf";
     new Directory(dirPath).create(recursive: true).then((value) {

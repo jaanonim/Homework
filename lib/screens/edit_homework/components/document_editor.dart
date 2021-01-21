@@ -59,7 +59,9 @@ class DocumentEditor {
       pdf.createNewPageSrc(tempText, img.imageSrc);
       tempText = "";
     }
-
+    if (tempText != "") {
+      pdf.createNewPageText(tempText);
+    }
     return await pdf.save(title);
   }
 

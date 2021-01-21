@@ -16,10 +16,14 @@ class TextDocElement extends DocumentElement {
   Widget generatePage() {
     return Align(
         alignment: Alignment.center,
-        child: Text(text,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 40,
+        child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: 130, minWidth: double.infinity),
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 40,
+              ),
             )));
   }
 
