@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:typed_data';
-
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -49,6 +48,7 @@ class PdfCreator {
   }
 
   Future<String> save(String dirName) async {
+    //TODO(anyone): chcek if the dirname is safe
 
     String dirPath = (await _localPath) + "/" + dirName + ".pdf";
     new Directory(dirPath).create(recursive: true).then((value) {

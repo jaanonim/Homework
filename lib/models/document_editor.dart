@@ -1,10 +1,11 @@
 import 'dart:io';
-import 'package:homework/models/document_elements/document_element.dart';
-import 'package:homework/models/document_elements/image_doc_element.dart';
-import 'package:homework/models/document_elements/text_doc_element.dart';
 import 'package:homework/models/homework_item.dart';
 import 'package:homework/models/pdf_creator.dart';
 import 'package:share/share.dart';
+
+import 'document_elements/document_element.dart';
+import 'document_elements/image_doc_element.dart';
+import 'document_elements/text_doc_element.dart';
 
 class DocumentEditor {
   List<DocumentElement> items = [];
