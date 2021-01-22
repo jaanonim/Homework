@@ -18,19 +18,26 @@ class PdfCreator {
     Directory directory;
     if (Platform.isAndroid) {
       directory = await DownloadsPathProvider.downloadsDirectory;
-    }
-    else {
+    } else {
       directory = await getExternalStorageDirectory();
     }
     return directory.path;
   }
 
-  void createNewPageSrc(String imageSrc) {
-    createNewPageByte(File(imageSrc).readAsBytesSync());
+  void createNewPageSrc(String text, String imageSrc) {
+    createNewPageByte(text, File(imageSrc).readAsBytesSync());
   }
 
-  void createNewPageByte(Uint8List file) {
-    print(doc);
+  void createNewPageText(String text) {
+    doc.addPage(
+      pw.Page(
+        build: (pw.Context context) =>
+            pw.Center(child: pw.Text(text, style: pw.TextStyle(fontSize: 30))),
+      ),
+    );
+  }
+
+  void createNewPageByte(String text, Uint8List file) {
     final image = PdfImage.file(
       doc.document,
       bytes: file,
@@ -38,7 +45,12 @@ class PdfCreator {
     doc.addPage(
       pw.Page(
         build: (pw.Context context) => pw.Center(
-          child: pw.Image(image, width: widthA4Page),
+          child: pw.Stack(children: [
+            pw.Image(image, fit: pw.BoxFit.fill),
+            pw.Align(
+                alignment: pw.Alignment.topCenter,
+                child: pw.Text(text, style: pw.TextStyle(fontSize: 30))),
+          ]),
         ),
       ),
     );
@@ -47,13 +59,12 @@ class PdfCreator {
   Future<String> save(String dirName) async {
     //TODO(anyone): chcek if the dirname is safe
     if(!await _requestPermissions()){ print("Permissions error!"); return null;}
-
-    String dirPath = await _localPath;
+    String dirPath = (await _localPath) + "/" + dirName;
     new Directory(dirPath).create(recursive: true).then((value) {
-      final file = File(dirPath + "/"+dirName+".pdf");
-      print(dirPath + "/"+dirName);
+      final file = File(dirPath + "/" + dirName + ".pdf");
+      print(dirPath + "/" + dirName);
       file.writeAsBytesSync(doc.save());
     });
-    return dirPath + "/"+dirName+".pdf";
+    return dirPath + "/" + dirName + ".pdf";
   }
 }

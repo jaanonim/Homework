@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
 class AddDocumentElementMenu extends StatefulWidget {
-  final Function addCameraPhoto,addGalleryPhoto;
+  final Function addCameraPhoto, addGalleryPhoto, addTextElement;
 
-  AddDocumentElementMenu({this.addCameraPhoto,this.addGalleryPhoto});
+  AddDocumentElementMenu(
+      {this.addCameraPhoto, this.addGalleryPhoto, this.addTextElement});
 
   @override
-  _AddDocumentElementMenuState createState() =>
-      _AddDocumentElementMenuState(addCameraPhoto: addCameraPhoto,addGalleryPhoto: addGalleryPhoto);
+  _AddDocumentElementMenuState createState() => _AddDocumentElementMenuState(
+      addCameraPhoto: addCameraPhoto,
+      addGalleryPhoto: addGalleryPhoto,
+      addTextElement: addTextElement);
 }
 
 class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
@@ -19,17 +22,18 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
   Animation<double> _translateButton;
   Curve _curve = Curves.easeOut;
   double _fabHeight = 56.0;
-  Function addCameraPhoto,addGalleryPhoto;
+  Function addCameraPhoto, addGalleryPhoto, addTextElement;
 
-  _AddDocumentElementMenuState({this.addCameraPhoto,this.addGalleryPhoto});
+  _AddDocumentElementMenuState(
+      {this.addCameraPhoto, this.addGalleryPhoto, this.addTextElement});
 
   @override
   initState() {
     _animationController =
-    AnimationController(vsync: this, duration: Duration(milliseconds: 250))
-      ..addListener(() {
-        setState(() {});
-      });
+        AnimationController(vsync: this, duration: Duration(milliseconds: 250))
+          ..addListener(() {
+            setState(() {});
+          });
     _animateIcon =
         Tween<double>(begin: 0.0, end: 1.0).animate(_animationController);
     _buttonColor = ColorTween(
@@ -75,21 +79,33 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
   Widget addGallery() {
     return Container(
         child: FloatingActionButton(
-          onPressed: addGalleryPhoto,
-          tooltip: 'Add',
-          heroTag: "gallery",
-          child: Icon(Icons.add_photo_alternate),
-        ));
+      onPressed: addGalleryPhoto,
+      tooltip: 'Add photo from gallery',
+      heroTag: "gallery",
+      child: Icon(Icons.add_photo_alternate),
+    ));
   }
 
   Widget addCamera() {
     return Container(
       child: FloatingActionButton(
-          onPressed: addCameraPhoto,
-          tooltip: 'Image',
-          heroTag: "camera",
-          child: Icon(Icons.add_a_photo),
-    ),);
+        onPressed: addCameraPhoto,
+        tooltip: 'Add photo from gallery',
+        heroTag: "camera",
+        child: Icon(Icons.add_a_photo),
+      ),
+    );
+  }
+
+  Widget addText() {
+    return Container(
+      child: FloatingActionButton(
+        onPressed: addTextElement,
+        tooltip: 'add text element',
+        heroTag: "text",
+        child: Icon(Icons.short_text_outlined),
+      ),
+    );
   }
 
   Widget toggle() {
@@ -115,7 +131,7 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
         Transform(
           transform: Matrix4.translationValues(
             0.0,
-            _translateButton.value * 2.0,
+            _translateButton.value * 3.0,
             0.0,
           ),
           child: addGallery(),
@@ -123,10 +139,18 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
         Transform(
           transform: Matrix4.translationValues(
             0.0,
-            _translateButton.value * 1.0,
+            _translateButton.value * 2.0,
             0.0,
           ),
           child: addCamera(),
+        ),
+        Transform(
+          transform: Matrix4.translationValues(
+            0.0,
+            _translateButton.value * 1.0,
+            0.0,
+          ),
+          child: addText(),
         ),
         toggle(),
       ],

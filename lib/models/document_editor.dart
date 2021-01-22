@@ -3,22 +3,26 @@ import 'package:homework/models/homework_item.dart';
 import 'package:homework/models/pdf_creator.dart';
 import 'package:share/share.dart';
 
+import 'document_elements/document_element.dart';
+import 'document_elements/image_doc_element.dart';
+import 'document_elements/text_doc_element.dart';
+
 class DocumentEditor {
-  var items = [];
+  List<DocumentElement> items = [];
   var title;
   Function saveFunc;
 
   DocumentEditor(FileItem homework, var saveFunction) {
-    items = homework.pathImages;
+    items = homework.docElements;
     title = homework.title;
     saveFunc = saveFunction;
   }
 
-  List<String> getPages() {
+  List<DocumentElement> getPages() {
     return items;
   }
 
-  void removePage(String i) {
+  void removePage(DocumentElement i) {
     if (items.contains(i)) items.remove(i);
 
     saveFunc();
@@ -34,21 +38,32 @@ class DocumentEditor {
     saveFunc();
   }
 
-  addNewImage(String path) {
+  addNewImage(ImageDocElement path) {
     items.add(path);
     saveFunc();
   }
 
+  void addNewText(TextDocElement element) {
+    items.add(element);
+    saveFunc();
+  }
+
   Future<String> generatePDF() async {
-
     var pdf = new PdfCreator();
-
+    var tempText = "";
     for (var src in items) {
-      pdf.createNewPageSrc(src);
+      if (src is TextDocElement) {
+        tempText += (src as TextDocElement).text;
+        continue;
+      }
+      var img = src as ImageDocElement;
+      pdf.createNewPageSrc(tempText, img.imageSrc);
+      tempText = "";
     }
-
-    String path = await pdf.save(title);
-    return path;
+    if (tempText != "") {
+      pdf.createNewPageText(tempText);
+    }
+    return await pdf.save(title);
   }
 
   Future<void> sharePDF() async {
