@@ -103,7 +103,7 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
         onPressed: addTextElement,
         tooltip: 'add text element',
         heroTag: "text",
-        child: Icon(Icons.short_text_outlined),
+        child: Icon(Icons.title),
       ),
     );
   }

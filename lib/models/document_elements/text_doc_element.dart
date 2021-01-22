@@ -18,11 +18,13 @@ class TextDocElement extends DocumentElement {
         alignment: Alignment.center,
         child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: 130, minWidth: double.infinity),
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 40,
+            child: Center(
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                ),
               ),
             )));
   }
