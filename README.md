@@ -1,4 +1,4 @@
-# homework
+# Homework
 
 A homework app.
 
