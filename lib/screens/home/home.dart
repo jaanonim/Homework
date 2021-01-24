@@ -48,9 +48,9 @@ class Home extends StatelessWidget {
             controller.text = data.defaultFileName;
           }
           inputPopup(context, "Create new homework:", "Create", controller, () {
-            HomeworkItem item = hierarchy.createFile(data.customMarkup ? useMarkups(controller.text, data) : controller.text);
+            HomeworkItem item = hierarchy.createFile(data.customMarkup ? useMarkups(controller.text, data) : controller.text, data);
             Navigator.pushNamed(context, "/editHomework",
-                arguments: {"homeworkItem": item});
+                arguments: {"homeworkItem": item, "save": hierarchy.saveAndRefresh});
           });
         },
         child: Icon(

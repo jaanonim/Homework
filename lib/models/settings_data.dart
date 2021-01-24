@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:homework/services/file_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:homework/models/homework_item.dart';
 
 class SettingsData with ChangeNotifier {
   SettingsData(bool readFormFile,
@@ -9,7 +10,9 @@ class SettingsData with ChangeNotifier {
       String defaultFileName,
       bool darkTheme,
       bool customMarkup,
-      String dateFormat]) {
+      String dateFormat,
+      bool enabledDefaultFile,
+      FileItem defaultFile]) {
     if (readFormFile) {
       readSettings().then((data) {
         if (data != null) {
@@ -18,6 +21,8 @@ class SettingsData with ChangeNotifier {
           this._darkTheme = data._darkTheme;
           this._customMarkup = data._customMarkup;
           this._dateFormat = data._dateFormat;
+          this._enabledDefaultFile = data._enabledDefaultFile;
+          this._defaultFile = data._defaultFile;
           notifyListeners();
         } else {
           print("Cannot read file!");
@@ -30,6 +35,8 @@ class SettingsData with ChangeNotifier {
     if (darkTheme != null) _darkTheme = darkTheme;
     if (customMarkup != null) _customMarkup = customMarkup;
     if (dateFormat != null) _dateFormat = dateFormat;
+    if (enabledDefaultFile != null) _enabledDefaultFile = enabledDefaultFile;
+    if (defaultFile != null) _defaultFile = defaultFile;
   }
 
   bool _automaticFileName = false;
@@ -73,6 +80,20 @@ class SettingsData with ChangeNotifier {
     saveAndRefresh();
   }
 
+  bool _enabledDefaultFile = false;
+  bool get enabledDefaultFile => _enabledDefaultFile;
+  set enabledDefaultFile(bool enabledDefaultFile) {
+    _enabledDefaultFile = enabledDefaultFile;
+    saveAndRefresh();
+  }
+
+  FileItem _defaultFile = FileItem(title: "Default file");
+  FileItem get defaultFile => _defaultFile;
+  set defaultFile(FileItem defaultFile) {
+    _defaultFile = defaultFile;
+    saveAndRefresh();
+  }
+
   DateFormat get getDateFormat => DateFormat(_dateFormat);
 
   void saveAndRefresh() {
@@ -87,11 +108,20 @@ class SettingsData with ChangeNotifier {
       'darkTheme': this._darkTheme,
       'customMarkup': this._customMarkup,
       'dateFormat': this._dateFormat,
+      'enabledDefaultFile': this._enabledDefaultFile,
+      'defaultFile': this._defaultFile.toJSON(),
     };
   }
 
   static SettingsData fromJSON(Map map) {
-    return SettingsData(false, map['automaticFileName'], map['defaultFileName'],
-        map['darkTheme'], map['customMarkup'], map['dateFormat']);
+    return SettingsData(
+        false,
+        map['automaticFileName'],
+        map['defaultFileName'],
+        map['darkTheme'],
+        map['customMarkup'],
+        map['dateFormat'],
+        map['enabledDefaultFile'],
+        HomeworkItem.fromJSON(map['defaultFile'], null));
   }
 }
