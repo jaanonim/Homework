@@ -19,16 +19,14 @@ class _EditHomeworkState extends State<EditHomework> {
   Map _data = {};
   DocumentEditor _editor;
   final controller = TextEditingController();
-  Hierarchy hierarchy;
   @override
   Widget build(BuildContext context) {
     _data = ModalRoute
         .of(context)
         .settings
         .arguments;
-    hierarchy = Provider.of<Hierarchy>(context);
     var title = _data["homeworkItem"].title;
-    _editor = DocumentEditor(_data["homeworkItem"], hierarchy.saveAndRefresh);
+    _editor = DocumentEditor(_data["homeworkItem"], _data["save"]);
 
     return Scaffold(
         appBar: AppBar(
@@ -133,7 +131,7 @@ class _EditHomeworkState extends State<EditHomework> {
     return Stack(children: [
       GestureDetector(
           onTap: () {
-              pathImage.onClick(context,hierarchy.saveAndRefresh);
+              pathImage.onClick(context,_data["save"]);
           },
           child: pathImage.generatePage()),
       Align(

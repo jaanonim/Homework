@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:homework/components/inputPopup.dart';
-import 'package:homework/components/menu.dart';
 import 'package:homework/models/hierarchy.dart';
 import 'package:homework/models/homework_item.dart';
 import 'package:homework/screens/home/components/body.dart';
@@ -33,8 +32,15 @@ class Home extends StatelessWidget {
                       .toList())),
           preferredSize: Size.fromHeight(40),
         ),
+        actions: [
+        IconButton(
+          icon: Icon(Icons.settings),
+          onPressed:(){
+            Navigator.pushNamed(context, "/settings");
+          },
+          ),
+        ],
       ),
-      drawer: Menu(),
       body: Body(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -42,9 +48,9 @@ class Home extends StatelessWidget {
             controller.text = data.defaultFileName;
           }
           inputPopup(context, "Create new homework:", "Create", controller, () {
-            HomeworkItem item = hierarchy.createFile(data.customMarkup ? useMarkups(controller.text, data) : controller.text);
+            HomeworkItem item = hierarchy.createFile(data.customMarkup ? useMarkups(controller.text, data) : controller.text, data);
             Navigator.pushNamed(context, "/editHomework",
-                arguments: {"homeworkItem": item});
+                arguments: {"homeworkItem": item, "save": hierarchy.saveAndRefresh});
           });
         },
         child: Icon(

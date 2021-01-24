@@ -58,8 +58,26 @@ class Settings extends StatelessWidget {
             ClickableSetting(
                 title: 'About custom markup',
                 onClick: () {
-                  infoPopup(context, 'About markups', 'In for e.g. filenames you can use custom markups like: "##date##" to add in this place current date.', 'Ok');
+                  infoPopup(
+                      context,
+                      'About markups',
+                      'In for e.g. filenames you can use custom markups like: "##date##" to add in this place current date.',
+                      'Ok');
                 }),
+            Divider(),
+            SwitchSetting(
+              title: 'Default file template',
+              subtitle:
+                  'If is enabled every file will be as copy of default file',
+              value: data.enabledDefaultFile,
+              switchValue: (bool value) {
+                data.enabledDefaultFile = value;
+              },
+            ),
+            ClickableSetting(title: 'Edit default file', onClick: () {
+              Navigator.pushNamed(context, "/editHomework",
+                  arguments: {"homeworkItem": data.defaultFile, "save": data.saveAndRefresh});
+            }),
             Divider(),
             ClickableSetting(
               title: 'Date format',

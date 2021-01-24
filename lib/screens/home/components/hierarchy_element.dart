@@ -18,7 +18,7 @@ class HierarchyElement extends StatelessWidget {
         children: [
           MaterialButton(
             onPressed: () {},
-            child: Text(folder.title),
+            child: Text(folder.title, style: TextStyle(color: Colors.white),),
             height: 0,
             minWidth: 10,
             padding: EdgeInsets.all(5),
@@ -32,7 +32,7 @@ class HierarchyElement extends StatelessWidget {
             onPressed: () {
               hierarchy.removeFromHierarchy(folder);
             },
-            child: Text(folder.title),
+            child: Text(folder.title, style: TextStyle(color: Colors.white),),
             height: 0,
             minWidth: 10,
             padding: EdgeInsets.all(5),

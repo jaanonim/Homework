@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:homework/models/homework_item.dart';
+import 'package:homework/models/settings_data.dart';
 import 'package:homework/services/file_service.dart';
 
 class Hierarchy with ChangeNotifier {
@@ -47,8 +48,9 @@ class Hierarchy with ChangeNotifier {
     notifyListeners();
   }
 
-  HomeworkItem createFile(String title) {
-    HomeworkItem homeworkItem = FileItem(title: title);
+  HomeworkItem createFile(String title, SettingsData data) {
+    HomeworkItem homeworkItem = data.enabledDefaultFile ? HomeworkItem.fromJSON(data.defaultFile.toJSON(),null) :  FileItem();
+    homeworkItem.title = title;
     hierarchy.last.moveToFolder([homeworkItem]);
     saveAndRefresh();
     return homeworkItem;

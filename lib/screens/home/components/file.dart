@@ -20,7 +20,7 @@ class File extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, "/editHomework",
-            arguments: {"homeworkItem": homeworkItem});
+            arguments: {"homeworkItem": homeworkItem,"save": hierarchy.saveAndRefresh});
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 7),
