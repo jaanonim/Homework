@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:homework/components/inputPopup.dart';
-import 'package:homework/components/menu.dart';
 import 'package:homework/models/hierarchy.dart';
 import 'package:homework/models/homework_item.dart';
 import 'package:homework/screens/home/components/body.dart';
@@ -33,8 +32,15 @@ class Home extends StatelessWidget {
                       .toList())),
           preferredSize: Size.fromHeight(40),
         ),
+        actions: [
+        IconButton(
+          icon: Icon(Icons.settings),
+          onPressed:(){
+            Navigator.pushNamed(context, "/settings");
+          },
+          ),
+        ],
       ),
-      drawer: Menu(),
       body: Body(),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
