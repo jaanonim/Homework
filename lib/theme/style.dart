@@ -14,6 +14,7 @@ class MainTheme {
       dividerTheme: DividerThemeData(
         indent: 15,
         endIndent: 15,
+        thickness: 1,
       ));
 
   ThemeData get lightTheme => ThemeData(
@@ -29,5 +30,6 @@ class MainTheme {
       dividerTheme: DividerThemeData(
         indent: 15,
         endIndent: 15,
+        thickness: 1,
       ));
 }

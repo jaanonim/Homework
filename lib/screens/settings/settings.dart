@@ -5,8 +5,18 @@ import 'package:homework/components/inputPopup.dart';
 import 'package:homework/components/infoPopup.dart';
 import 'package:homework/screens/settings/components/switch_setting.dart';
 import 'package:homework/screens/settings/components/clickable_setting.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Settings extends StatelessWidget {
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final SettingsData data = Provider.of<SettingsData>(context);
@@ -28,6 +38,7 @@ class Settings extends StatelessWidget {
             Divider(),
             SwitchSetting(
               title: 'Automatic file name',
+              subtitle: 'If is enabled every file will be created with default name',
               value: data.automaticFileName,
               switchValue: (bool value) {
                 data.automaticFileName = value;
@@ -68,7 +79,7 @@ class Settings extends StatelessWidget {
             SwitchSetting(
               title: 'Default file template',
               subtitle:
-                  'If is enabled every file will be as copy of default file',
+                  'If is enabled every file will be created as copy of default file.',
               value: data.enabledDefaultFile,
               switchValue: (bool value) {
                 data.enabledDefaultFile = value;
@@ -92,6 +103,28 @@ class Settings extends StatelessWidget {
                 });
               },
             ),
+            Divider(),
+            ClickableSetting(
+                title: 'Credits',
+                onClick: () {
+                  infoPopup(
+                      context,
+                      'Authors:',
+                      '- Dominik Wojtasik\n- Mateusz Mrowiec',
+                      'Ok');
+                }),
+            ClickableSetting(
+                title: 'License',
+                subtitle: 'GNU General Public License v3.0',
+                onClick: () {
+                  _launchURL("https://raw.githubusercontent.com/jaanonim/Homework/master/LICENSE");
+                }),
+            ClickableSetting(
+                title: 'This project is open source',
+                subtitle: "https://github.com/jaanonim/Homework/",
+                onClick: () {
+                  _launchURL("https://github.com/jaanonim/Homework/");
+                }),
           ],
         ));
   }
