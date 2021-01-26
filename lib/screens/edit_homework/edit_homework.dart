@@ -4,10 +4,8 @@ import 'package:homework/components/inputPopup.dart';
 import 'package:homework/models/document_elements/document_element.dart';
 import 'package:homework/models/document_elements/image_doc_element.dart';
 import 'package:homework/models/document_elements/text_doc_element.dart';
-import 'package:homework/models/hierarchy.dart';
 import 'package:homework/models/image_loader.dart';
 import 'package:homework/screens/edit_homework/components/add_document_element_menu.dart';
-import 'package:provider/provider.dart';
 import 'package:homework/models/document_editor.dart';
 
 class EditHomework extends StatefulWidget {

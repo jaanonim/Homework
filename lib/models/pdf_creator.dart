@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:downloads_path_provider/downloads_path_provider.dart';
+import 'package:ext_storage/ext_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -15,13 +15,14 @@ class PdfCreator {
   }
 
   Future<String> get _localPath async {
-    Directory directory;
+    String path;
     if (Platform.isAndroid) {
-      directory = await DownloadsPathProvider.downloadsDirectory;
+      path = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
     } else {
-      directory = await getExternalStorageDirectory();
+      Directory directory = await getExternalStorageDirectory();
+      path = directory.path;
     }
-    return directory.path;
+    return path;
   }
 
   void createNewPageSrc(String text, String imageSrc) {

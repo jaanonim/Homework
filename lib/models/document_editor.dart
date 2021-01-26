@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:homework/models/homework_item.dart';
 import 'package:homework/models/pdf_creator.dart';
 import 'package:share/share.dart';
@@ -68,6 +67,6 @@ class DocumentEditor {
 
   Future<void> sharePDF() async {
     String path = await generatePDF();
-    Share.shareFile(File(path), subject: 'Homework Generator-' + title);
+    Share.shareFiles([path], subject: 'Homework Generator-' + title);
   }
 }
