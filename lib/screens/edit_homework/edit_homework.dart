@@ -21,10 +21,7 @@ class _EditHomeworkState extends State<EditHomework> {
   final controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    _data = ModalRoute
-        .of(context)
-        .settings
-        .arguments;
+    _data = ModalRoute.of(context).settings.arguments;
     var title = _data["homeworkItem"].title;
     _editor = DocumentEditor(_data["homeworkItem"], _data["save"]);
 
@@ -39,14 +36,9 @@ class _EditHomeworkState extends State<EditHomework> {
                   Flushbar(
                     message: 'Start Sharing',
                     duration: Duration(seconds: 3),
-                    backgroundColor: Theme
-                        .of(context)
-                        .accentColor,
-                    leftBarIndicatorColor: Theme
-                        .of(context)
-                        .primaryColor,
-                  )
-                    ..show(context);
+                    backgroundColor: Theme.of(context).accentColor,
+                    leftBarIndicatorColor: Theme.of(context).primaryColor,
+                  )..show(context);
                   _editor.sharePDF();
                 }),
             IconButton(
@@ -54,45 +46,27 @@ class _EditHomeworkState extends State<EditHomework> {
                 onPressed: () async {
                   Flushbar(
                     message: 'Downloading...',
-                    backgroundColor: Theme
-                        .of(context)
-                        .accentColor,
-                    leftBarIndicatorColor: Theme
-                        .of(context)
-                        .primaryColor,
+                    backgroundColor: Theme.of(context).accentColor,
+                    leftBarIndicatorColor: Theme.of(context).primaryColor,
                     duration: Duration(seconds: 3),
-                  )
-                    ..show(context);
+                  )..show(context);
                   await _editor.generatePDF();
                   Flushbar(
                     message: 'Downloaded',
-                    backgroundColor: Theme
-                        .of(context)
-                        .accentColor,
-                    leftBarIndicatorColor: Theme
-                        .of(context)
-                        .primaryColor,
+                    backgroundColor: Theme.of(context).accentColor,
+                    leftBarIndicatorColor: Theme.of(context).primaryColor,
                     duration: Duration(seconds: 4),
-                  )
-                    ..show(context);
+                  )..show(context);
                 })
           ],
         ),
         body: ListView(
           children: [
             for (final i in _editor.getPages())
-              Dismissible(
-                key: ValueKey(i),
-                onDismissed: (direction) {
-                  setState(() {
-                    _editor.removePage(i);
-                  });
-                },
-                child: ListTile(
-                    title: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: generatePage(i))),
-              )
+              ListTile(
+                  title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: generatePage(i)))
           ],
         ),
         floatingActionButton: AddDocumentElementMenu(
@@ -131,7 +105,7 @@ class _EditHomeworkState extends State<EditHomework> {
     return Stack(children: [
       GestureDetector(
           onTap: () {
-              pathImage.onClick(context,_data["save"]);
+            pathImage.onClick(context, _data["save"]);
           },
           child: pathImage.generatePage()),
       Align(
@@ -139,22 +113,31 @@ class _EditHomeworkState extends State<EditHomework> {
         child: Column(
           children: [
             IconButton(
-              icon: Icon(Icons.arrow_circle_up_rounded),
+              icon: Icon(Icons.arrow_upward_rounded),
               onPressed: () {
                 setState(() {
                   _editor.swapPages(pathImage, true);
                 });
               },
-              iconSize: 50,
+              iconSize: 40,
             ),
             IconButton(
-              icon: Icon(Icons.arrow_circle_down_rounded),
+              icon: Icon(Icons.delete_rounded),
+              onPressed: () {
+                setState(() {
+                  _editor.removePage(pathImage);
+                });
+              },
+              iconSize: 40,
+            ),
+            IconButton(
+              icon: Icon(Icons.arrow_downward_rounded),
               onPressed: () {
                 setState(() {
                   _editor.swapPages(pathImage, false);
                 });
               },
-              iconSize: 50,
+              iconSize: 40,
             ),
           ],
         ),

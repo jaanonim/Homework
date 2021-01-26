@@ -68,7 +68,6 @@ class DocumentEditor {
 
   Future<void> sharePDF() async {
     String path = await generatePDF();
-
     Share.shareFile(File(path), subject: 'Homework Generator-' + title);
   }
 }

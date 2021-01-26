@@ -79,10 +79,13 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
   Widget addGallery() {
     return Container(
         child: FloatingActionButton(
-      onPressed: addGalleryPhoto,
-      tooltip: 'Add photo from gallery',
-      heroTag: "gallery",
-      child: Icon(Icons.add_photo_alternate),
+        onPressed: addGalleryPhoto,
+        tooltip: 'Add photo from gallery',
+        heroTag: "gallery",
+        child: Icon(
+          Icons.add_photo_alternate,
+          color: Colors.white,
+        ),
     ));
   }
 
@@ -92,7 +95,10 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
         onPressed: addCameraPhoto,
         tooltip: 'Add photo from gallery',
         heroTag: "camera",
-        child: Icon(Icons.add_a_photo),
+        child: Icon(
+          Icons.add_a_photo,
+          color: Colors.white,
+        ),
       ),
     );
   }
@@ -103,7 +109,10 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
         onPressed: addTextElement,
         tooltip: 'add text element',
         heroTag: "text",
-        child: Icon(Icons.title),
+        child: Icon(
+          Icons.title,
+          color: Colors.white,
+        ),
       ),
     );
   }
@@ -117,6 +126,7 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
         heroTag: "taggle",
         child: AnimatedIcon(
           icon: AnimatedIcons.menu_close,
+          color: Colors.white,
           progress: _animateIcon,
         ),
       ),
