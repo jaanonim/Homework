@@ -7,6 +7,8 @@ import 'package:homework/models/document_elements/text_doc_element.dart';
 import 'package:homework/models/image_loader.dart';
 import 'package:homework/screens/edit_homework/components/add_document_element_menu.dart';
 import 'package:homework/models/document_editor.dart';
+import 'package:provider/provider.dart';
+import 'package:homework/models/settings_data.dart';
 
 class EditHomework extends StatefulWidget {
   @override
@@ -17,8 +19,12 @@ class _EditHomeworkState extends State<EditHomework> {
   Map _data = {};
   DocumentEditor _editor;
   final controller = TextEditingController();
+  SettingsData _settings;
+
+
   @override
   Widget build(BuildContext context) {
+    _settings = Provider.of<SettingsData>(context);
     _data = ModalRoute.of(context).settings.arguments;
     var title = _data["homeworkItem"].title;
     _editor = DocumentEditor(_data["homeworkItem"], _data["save"]);
@@ -32,7 +38,7 @@ class _EditHomeworkState extends State<EditHomework> {
                 icon: Icon(Icons.share),
                 onPressed: () {
                   Flushbar(
-                    message: 'Start Sharing',
+                    message: 'Sharing...',
                     duration: Duration(seconds: 3),
                     backgroundColor: Theme.of(context).accentColor,
                     leftBarIndicatorColor: Theme.of(context).primaryColor,
@@ -74,7 +80,7 @@ class _EditHomeworkState extends State<EditHomework> {
   }
 
   Future<void> addCameraPhoto() async {
-    String src = await ImageLoader().getImageCamera();
+    String src = await ImageLoader().getImageCamera(_settings == null ? 50 : _settings.imgQuality);
     if (src != null) {
       setState(() {
         _editor.addNewImage(ImageDocElement(src));
@@ -83,7 +89,7 @@ class _EditHomeworkState extends State<EditHomework> {
   }
 
   Future<void> addGalleryPhoto() async {
-    String src = await ImageLoader().getImageGallery();
+    String src = await ImageLoader().getImageGallery(_settings == null ? 50 : _settings.imgQuality);
     if (src != null) {
       setState(() {
         _editor.addNewImage(ImageDocElement(src));
@@ -92,7 +98,7 @@ class _EditHomeworkState extends State<EditHomework> {
   }
 
   Future<void> addText() async {
-    inputPopup(context, "New text", "CREATE", controller, () {
+    inputPopup(context, "New text", "Create", controller, () {
       setState(() {
         _editor.addNewText(TextDocElement(controller.text));
       });

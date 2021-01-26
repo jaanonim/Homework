@@ -12,7 +12,8 @@ class SettingsData with ChangeNotifier {
       bool customMarkup,
       String dateFormat,
       bool enabledDefaultFile,
-      FileItem defaultFile]) {
+      FileItem defaultFile,
+      int imgQuality]) {
     if (readFormFile) {
       readSettings().then((data) {
         if (data != null) {
@@ -23,6 +24,7 @@ class SettingsData with ChangeNotifier {
           this._dateFormat = data._dateFormat;
           this._enabledDefaultFile = data._enabledDefaultFile;
           this._defaultFile = data._defaultFile;
+          this._imgQuality = data._imgQuality;
           notifyListeners();
         } else {
           print("Cannot read file!");
@@ -37,6 +39,7 @@ class SettingsData with ChangeNotifier {
     if (dateFormat != null) _dateFormat = dateFormat;
     if (enabledDefaultFile != null) _enabledDefaultFile = enabledDefaultFile;
     if (defaultFile != null) _defaultFile = defaultFile;
+    if (imgQuality != null) _imgQuality = imgQuality;
   }
 
   bool _automaticFileName = false;
@@ -94,6 +97,13 @@ class SettingsData with ChangeNotifier {
     saveAndRefresh();
   }
 
+  int _imgQuality = 50;
+  int get imgQuality => _imgQuality;
+  set imgQuality(int imgQuality) {
+    _imgQuality = imgQuality;
+    saveAndRefresh();
+  }
+
   DateFormat get getDateFormat => DateFormat(_dateFormat);
 
   void saveAndRefresh() {
@@ -110,18 +120,21 @@ class SettingsData with ChangeNotifier {
       'dateFormat': this._dateFormat,
       'enabledDefaultFile': this._enabledDefaultFile,
       'defaultFile': this._defaultFile.toJSON(),
+      'imgQuality': this._imgQuality,
     };
   }
 
   static SettingsData fromJSON(Map map) {
     return SettingsData(
-        false,
-        map['automaticFileName'],
-        map['defaultFileName'],
-        map['darkTheme'],
-        map['customMarkup'],
-        map['dateFormat'],
-        map['enabledDefaultFile'],
-        HomeworkItem.fromJSON(map['defaultFile'], null));
+      false,
+      map['automaticFileName'],
+      map['defaultFileName'],
+      map['darkTheme'],
+      map['customMarkup'],
+      map['dateFormat'],
+      map['enabledDefaultFile'],
+      HomeworkItem.fromJSON(map['defaultFile'], null),
+      map['imgQuality'],
+    );
   }
 }

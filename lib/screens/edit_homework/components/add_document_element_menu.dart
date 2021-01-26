@@ -123,7 +123,7 @@ class _AddDocumentElementMenuState extends State<AddDocumentElementMenu>
         backgroundColor: _buttonColor.value,
         onPressed: animate,
         tooltip: 'Toggle',
-        heroTag: "taggle",
+        heroTag: "toggle",
         child: AnimatedIcon(
           icon: AnimatedIcons.menu_close,
           color: Colors.white,
