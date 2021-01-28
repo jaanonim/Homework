@@ -19,7 +19,7 @@ class PdfCreator {
     if (Platform.isAndroid) {
       path = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
     } else {
-      Directory directory = await getExternalStorageDirectory();
+      Directory directory = await getDownloadsDirectory();
       path = directory.path;
     }
     return path;

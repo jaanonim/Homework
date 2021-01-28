@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import 'document_elements/document_element.dart';
 
 class FolderItem extends HomeworkItem {
