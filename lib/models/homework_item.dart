@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'document_elements/document_element.dart';
 
 class FolderItem extends HomeworkItem {
@@ -53,6 +55,14 @@ class FileItem extends HomeworkItem {
     Map m = super.toJSON();
     m.addAll({'docElements': [for(var element in docElements) element.toJSON()]});
     return m;
+  }
+
+  @override
+  deleteItem() {
+    docElements.forEach((element) {
+      element.remove();
+    });
+    super.deleteItem();
   }
 }
 

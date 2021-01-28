@@ -26,12 +26,12 @@ class _EditHomeworkState extends State<EditHomework> {
   Widget build(BuildContext context) {
     _settings = Provider.of<SettingsData>(context);
     _data = ModalRoute.of(context).settings.arguments;
-    var title = _data["homeworkItem"].title;
+    String _title = _data["homeworkItem"].title;
     _editor = DocumentEditor(_data["homeworkItem"], _data["save"]);
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(title),
+          title: Text(_title),
           centerTitle: true,
           actions: [
             IconButton(
@@ -54,7 +54,7 @@ class _EditHomeworkState extends State<EditHomework> {
                     leftBarIndicatorColor: Theme.of(context).primaryColor,
                     duration: Duration(seconds: 3),
                   )..show(context);
-                  await _editor.generatePDF();
+                  await _editor.generatePDF(true);
                   Flushbar(
                     message: 'Downloaded',
                     backgroundColor: Theme.of(context).accentColor,

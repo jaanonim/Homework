@@ -24,4 +24,8 @@ class ImageDocElement extends DocumentElement {
   void onClick(context,saveFunction) {
     return;
   }
+
+  void remove(){
+    File(imageSrc).delete();
+  }
 }

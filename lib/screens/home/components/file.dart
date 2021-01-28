@@ -35,6 +35,13 @@ class File extends StatelessWidget {
                   child: Text(homeworkItem.title),
                 ),
               ),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Icon(
+                      Icons.insert_drive_file,
+                      size: 60,
+                    ),
+                  ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

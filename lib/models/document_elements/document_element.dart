@@ -18,4 +18,6 @@ abstract class DocumentElement {
   }
 
   void onClick(context,saveFunction);
+
+  void remove();
 }

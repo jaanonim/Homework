@@ -42,4 +42,8 @@ class TextDocElement extends DocumentElement {
       saveFunction();
     });
   }
+
+  void remove(){
+    return;
+  }
 }

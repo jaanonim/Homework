@@ -14,6 +14,7 @@ class ImageLoader {
   Future<String> getImage(source,int quality) async {
     final pickedFile = await picker.getImage(source: source,imageQuality: quality);
     if (pickedFile != null) {
+      print(pickedFile.path);
       return pickedFile.path;
     } else {
       print('No image selected.');
