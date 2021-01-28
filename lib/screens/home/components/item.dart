@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:homework/models/homework_item.dart';
-import 'package:homework/screens/home/components/file.dart';
-import 'package:homework/screens/home/components/folder.dart';
+import 'package:Homework/models/homework_item.dart';
+import 'package:Homework/screens/home/components/file.dart';
+import 'package:Homework/screens/home/components/folder.dart';
 
 class Item extends StatelessWidget {
   final HomeworkItem homeworkItem;

@@ -1,14 +1,14 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:homework/components/inputPopup.dart';
-import 'package:homework/models/document_elements/document_element.dart';
-import 'package:homework/models/document_elements/image_doc_element.dart';
-import 'package:homework/models/document_elements/text_doc_element.dart';
-import 'package:homework/models/image_loader.dart';
-import 'package:homework/screens/edit_homework/components/add_document_element_menu.dart';
-import 'package:homework/models/document_editor.dart';
+import 'package:Homework/components/inputPopup.dart';
+import 'package:Homework/models/document_elements/document_element.dart';
+import 'package:Homework/models/document_elements/image_doc_element.dart';
+import 'package:Homework/models/document_elements/text_doc_element.dart';
+import 'package:Homework/models/image_loader.dart';
+import 'package:Homework/screens/edit_homework/components/add_document_element_menu.dart';
+import 'package:Homework/models/document_editor.dart';
 import 'package:provider/provider.dart';
-import 'package:homework/models/settings_data.dart';
+import 'package:Homework/models/settings_data.dart';
 
 class EditHomework extends StatefulWidget {
   @override

@@ -1,11 +1,11 @@
 import 'package:drag_and_drop_gridview/devdrag.dart';
 import 'package:drag_and_drop_gridview/drag.dart';
 import 'package:flutter/material.dart';
-import 'package:homework/components/inputPopup.dart';
-import 'package:homework/models/hierarchy.dart';
-import 'package:homework/models/homework_item.dart';
-import 'package:homework/screens/home/components/item.dart';
-import 'package:homework/screens/home/components/item_feedback.dart';
+import 'package:Homework/components/inputPopup.dart';
+import 'package:Homework/models/hierarchy.dart';
+import 'package:Homework/models/homework_item.dart';
+import 'package:Homework/screens/home/components/item.dart';
+import 'package:Homework/screens/home/components/item_feedback.dart';
 import 'package:provider/provider.dart';
 
 class Body extends StatelessWidget {

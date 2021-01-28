@@ -1,5 +1,5 @@
-import 'package:homework/models/homework_item.dart';
-import 'package:homework/models/pdf_creator.dart';
+import 'package:Homework/models/homework_item.dart';
+import 'package:Homework/models/pdf_creator.dart';
 import 'package:share/share.dart';
 
 import 'document_elements/document_element.dart';

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:homework/components/inputPopup.dart';
-import 'package:homework/models/hierarchy.dart';
-import 'package:homework/models/homework_item.dart';
-import 'package:homework/screens/home/components/body.dart';
-import 'package:homework/screens/home/components/hierarchy_element.dart';
+import 'package:Homework/components/inputPopup.dart';
+import 'package:Homework/models/hierarchy.dart';
+import 'package:Homework/models/homework_item.dart';
+import 'package:Homework/screens/home/components/body.dart';
+import 'package:Homework/screens/home/components/hierarchy_element.dart';
 import 'package:provider/provider.dart';
-import 'package:homework/models/settings_data.dart';
-import 'package:homework/models/custom_markups.dart';
+import 'package:Homework/models/settings_data.dart';
+import 'package:Homework/models/custom_markups.dart';
 
 class Home extends StatelessWidget {
   final controller = TextEditingController();

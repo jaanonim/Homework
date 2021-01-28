@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:homework/models/document_elements/image_doc_element.dart';
-import 'package:homework/models/document_elements/text_doc_element.dart';
+import 'package:Homework/models/document_elements/image_doc_element.dart';
+import 'package:Homework/models/document_elements/text_doc_element.dart';
 
 abstract class DocumentElement {
   Widget generatePage();

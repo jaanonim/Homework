@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:homework/models/homework_item.dart';
+import 'package:Homework/models/homework_item.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:homework/models/settings_data.dart';
+import 'package:Homework/models/settings_data.dart';
 
 Future<String> get _localPath async {
   final directory = await getExternalStorageDirectory();

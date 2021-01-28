@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:homework/models/homework_item.dart';
+import 'package:Homework/models/homework_item.dart';
 
 class ItemFeedback extends StatelessWidget {
   final HomeworkItem homeworkItem;

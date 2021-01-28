@@ -1,4 +1,4 @@
-package com.example.homework;
+package com.AnonimGames.Homework;
 
 import io.flutter.embedding.android.FlutterActivity;
 

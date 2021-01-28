@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:homework/components/inputPopup.dart';
-import 'package:homework/components/yesNoPopup.dart';
-import 'package:homework/models/hierarchy.dart';
-import 'package:homework/models/homework_item.dart';
+import 'package:Homework/components/inputPopup.dart';
+import 'package:Homework/components/yesNoPopup.dart';
+import 'package:Homework/models/hierarchy.dart';
+import 'package:Homework/models/homework_item.dart';
 import 'package:provider/provider.dart';
 
 class Folder extends StatelessWidget {
