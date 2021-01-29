@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:homework/models/hierarchy.dart';
-import 'package:homework/models/homework_item.dart';
+import 'package:Homework/models/hierarchy.dart';
+import 'package:Homework/models/homework_item.dart';
 import 'package:provider/provider.dart';
 
 class HierarchyElement extends StatelessWidget {

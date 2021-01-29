@@ -1,9 +1,9 @@
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:homework/components/yesNoPopup.dart';
-import 'package:homework/models/document_editor.dart';
-import 'package:homework/models/hierarchy.dart';
-import 'package:homework/models/homework_item.dart';
+import 'package:Homework/components/yesNoPopup.dart';
+import 'package:Homework/models/document_editor.dart';
+import 'package:Homework/models/hierarchy.dart';
+import 'package:Homework/models/homework_item.dart';
 import 'package:provider/provider.dart';
 
 class File extends StatelessWidget {
@@ -35,6 +35,13 @@ class File extends StatelessWidget {
                   child: Text(homeworkItem.title),
                 ),
               ),
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Icon(
+                      Icons.insert_drive_file,
+                      size: 60,
+                    ),
+                  ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

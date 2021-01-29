@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:homework/models/document_elements/document_element.dart';
+import 'package:Homework/models/document_elements/document_element.dart';
 
 class ImageDocElement extends DocumentElement {
   String imageSrc;
@@ -23,5 +23,9 @@ class ImageDocElement extends DocumentElement {
   @override
   void onClick(context,saveFunction) {
     return;
+  }
+
+  void remove(){
+    File(imageSrc).delete();
   }
 }

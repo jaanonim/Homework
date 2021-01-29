@@ -54,6 +54,14 @@ class FileItem extends HomeworkItem {
     m.addAll({'docElements': [for(var element in docElements) element.toJSON()]});
     return m;
   }
+
+  @override
+  deleteItem() {
+    docElements.forEach((element) {
+      element.remove();
+    });
+    super.deleteItem();
+  }
 }
 
 abstract class HomeworkItem {

@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
-import 'package:homework/services/file_service.dart';
+import 'package:Homework/services/file_service.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:homework/models/homework_item.dart';
+import 'package:Homework/models/homework_item.dart';
 
 class SettingsData with ChangeNotifier {
   SettingsData(bool readFormFile,

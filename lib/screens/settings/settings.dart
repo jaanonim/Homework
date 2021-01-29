@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:homework/models/settings_data.dart';
+import 'package:Homework/models/settings_data.dart';
 import 'package:provider/provider.dart';
-import 'package:homework/components/inputPopup.dart';
-import 'package:homework/components/infoPopup.dart';
-import 'package:homework/components/inputSliderPopup.dart';
-import 'package:homework/screens/settings/components/switch_setting.dart';
-import 'package:homework/screens/settings/components/clickable_setting.dart';
+import 'package:Homework/components/inputPopup.dart';
+import 'package:Homework/components/infoPopup.dart';
+import 'package:Homework/components/inputSliderPopup.dart';
+import 'package:Homework/screens/settings/components/switch_setting.dart';
+import 'package:Homework/screens/settings/components/clickable_setting.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Settings extends StatelessWidget {

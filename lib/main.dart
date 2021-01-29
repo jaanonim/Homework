@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:homework/models/hierarchy.dart';
-import 'package:homework/screens/edit_homework/edit_homework.dart';
-import 'package:homework/screens/home/home.dart';
-import 'package:homework/screens/settings/settings.dart';
-import 'package:homework/theme/style.dart';
+import 'package:Homework/models/hierarchy.dart';
+import 'package:Homework/screens/edit_homework/edit_homework.dart';
+import 'package:Homework/screens/home/home.dart';
+import 'package:Homework/screens/settings/settings.dart';
+import 'package:Homework/theme/style.dart';
 import 'package:provider/provider.dart';
-import 'package:homework/models/settings_data.dart';
+import 'package:Homework/models/settings_data.dart';
 
 main() {
   runApp(ChangeNotifierProvider<SettingsData>(

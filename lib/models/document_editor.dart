@@ -1,5 +1,5 @@
-import 'package:homework/models/homework_item.dart';
-import 'package:homework/models/pdf_creator.dart';
+import 'package:Homework/models/homework_item.dart';
+import 'package:Homework/models/pdf_creator.dart';
 import 'package:share/share.dart';
 
 import 'document_elements/document_element.dart';
@@ -22,7 +22,7 @@ class DocumentEditor {
   }
 
   void removePage(DocumentElement i) {
-    if (items.contains(i)) items.remove(i);
+    if (items.contains(i)){i.remove(); items.remove(i);};
 
     saveFunc();
   }
@@ -47,7 +47,8 @@ class DocumentEditor {
     saveFunc();
   }
 
-  Future<String> generatePDF() async {
+  Future<String> generatePDF(bool openFile) async {
+    print("Generating file");
     var pdf = new PdfCreator();
     var tempText = "";
     for (var src in items) {
@@ -62,11 +63,15 @@ class DocumentEditor {
     if (tempText != "") {
       pdf.createNewPageText(tempText);
     }
-    return await pdf.save(title);
+    print("Saving");
+    String path = await pdf.save(title);
+    //if(openFile) OpenFile.open(path);
+    return path;
   }
 
   Future<void> sharePDF() async {
-    String path = await generatePDF();
+    String path = await generatePDF(false);
+    print("Sharing");
     Share.shareFiles([path], subject: 'Homework Generator-' + title);
   }
 }

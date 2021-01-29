@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:homework/models/homework_item.dart';
-import 'package:homework/models/settings_data.dart';
-import 'package:homework/services/file_service.dart';
+import 'package:Homework/models/homework_item.dart';
+import 'package:Homework/models/settings_data.dart';
+import 'package:Homework/services/file_service.dart';
 
 class Hierarchy with ChangeNotifier {
   List<FolderItem> hierarchy = [FolderItem(title: "home")];
