@@ -58,8 +58,8 @@ class PdfCreator {
   }
 
   Future<String> save(String dirName) async {
-    //TODO(anyone): chcek if the dirname is safe
     if(!await _requestPermissions()){ print("Permissions error!"); return null;}
+    dirName = dirName.replaceAll(" ", "_");
     String dirPath = (await _localPath) ;
     new Directory(dirPath).create(recursive: true).then((value) {
       final file = File(dirPath + "/" + dirName + ".pdf");

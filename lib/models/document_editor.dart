@@ -53,7 +53,7 @@ class DocumentEditor {
     var tempText = "";
     for (var src in items) {
       if (src is TextDocElement) {
-        tempText += (src as TextDocElement).text;
+        tempText += src.text;
         continue;
       }
       var img = src as ImageDocElement;
