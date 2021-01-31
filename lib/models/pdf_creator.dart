@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 class PdfCreator {
   final double widthA4Page = 841;
@@ -29,11 +30,13 @@ class PdfCreator {
     createNewPageByte(text, File(imageSrc).readAsBytesSync());
   }
 
-  void createNewPageText(String text) {
+  void createNewPageText(String text) async{
+    final ttf = pw.Font.ttf(await rootBundle.load("assets/OpenSans.ttf"));
+
     doc.addPage(
       pw.Page(
         build: (pw.Context context) =>
-            pw.Center(child: pw.Text(text, style: pw.TextStyle(fontSize: 30))),
+            pw.Center(child: pw.Text(text, style: pw.TextStyle(fontSize: 30, font: ttf)),)
       ),
     );
   }

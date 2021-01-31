@@ -21,7 +21,6 @@ class _EditHomeworkState extends State<EditHomework> {
   final controller = TextEditingController();
   SettingsData _settings;
 
-
   @override
   Widget build(BuildContext context) {
     _settings = Provider.of<SettingsData>(context);
@@ -31,7 +30,16 @@ class _EditHomeworkState extends State<EditHomework> {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(_title),
+          title: InkWell(
+              onTap: () {
+                controller.text=_title;
+                inputPopup(context, "Rename folder", "Rename", controller, () {
+                  setState(() {
+                    _editor.rename(controller.text);
+                  });
+                });
+              },
+              child: Text(_title)),
           centerTitle: true,
           actions: [
             IconButton(
@@ -80,7 +88,8 @@ class _EditHomeworkState extends State<EditHomework> {
   }
 
   Future<void> addCameraPhoto() async {
-    String src = await ImageLoader().getImageCamera(_settings == null ? 50 : _settings.imgQuality);
+    String src = await ImageLoader()
+        .getImageCamera(_settings == null ? 50 : _settings.imgQuality);
     if (src != null) {
       setState(() {
         _editor.addNewImage(ImageDocElement(src));
@@ -89,7 +98,8 @@ class _EditHomeworkState extends State<EditHomework> {
   }
 
   Future<void> addGalleryPhoto() async {
-    String src = await ImageLoader().getImageGallery(_settings == null ? 50 : _settings.imgQuality);
+    String src = await ImageLoader()
+        .getImageGallery(_settings == null ? 50 : _settings.imgQuality);
     if (src != null) {
       setState(() {
         _editor.addNewImage(ImageDocElement(src));
@@ -98,6 +108,7 @@ class _EditHomeworkState extends State<EditHomework> {
   }
 
   Future<void> addText() async {
+    controller.text="";
     inputPopup(context, "New text", "Create", controller, () {
       setState(() {
         _editor.addNewText(TextDocElement(controller.text));
@@ -107,9 +118,11 @@ class _EditHomeworkState extends State<EditHomework> {
 
   generatePage(DocumentElement pathImage) {
     return Stack(children: [
-      GestureDetector(
+      InkWell(
           onTap: () {
-            pathImage.onClick(context, _data["save"]);
+            pathImage.onClick(context, (){setState(() {
+              _data["save"]();
+            });});
           },
           child: pathImage.generatePage()),
       Align(

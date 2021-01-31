@@ -1,4 +1,5 @@
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_exif_rotation/flutter_exif_rotation.dart';
 
 class ImageLoader {
   final picker = ImagePicker();
@@ -13,8 +14,9 @@ class ImageLoader {
 
   Future<String> getImage(source,int quality) async {
     final pickedFile = await picker.getImage(source: source,imageQuality: quality);
+
     if (pickedFile != null) {
-      print(pickedFile.path);
+      await FlutterExifRotation.rotateAndSaveImage(path: pickedFile.path);
       return pickedFile.path;
     } else {
       print('No image selected.');

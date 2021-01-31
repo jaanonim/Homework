@@ -13,13 +13,17 @@ class ItemFeedback extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(homeworkItem.title),
+            SizedBox(width: 100, child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                child: Text(
+                  homeworkItem.title,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
               ),
-            ),
+            ),),
+
             FittedBox(
               fit: BoxFit.contain,
               child: Icon(

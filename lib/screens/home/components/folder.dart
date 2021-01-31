@@ -28,11 +28,12 @@ class Folder extends StatelessWidget {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(homeworkItem.title),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    homeworkItem.title,
+                    overflow: TextOverflow.ellipsis,
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
                 ),
                 FittedBox(

@@ -15,12 +15,15 @@ class File extends StatelessWidget {
   Widget build(BuildContext context) {
     final Hierarchy hierarchy = Provider.of<Hierarchy>(context);
 
-    DocumentEditor _editor = DocumentEditor(homeworkItem, hierarchy.saveAndRefresh);
+    DocumentEditor _editor =
+        DocumentEditor(homeworkItem, hierarchy.saveAndRefresh);
 
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, "/editHomework",
-            arguments: {"homeworkItem": homeworkItem,"save": hierarchy.saveAndRefresh});
+        Navigator.pushNamed(context, "/editHomework", arguments: {
+          "homeworkItem": homeworkItem,
+          "save": hierarchy.saveAndRefresh
+        });
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 7),
@@ -28,20 +31,21 @@ class File extends StatelessWidget {
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-              FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(homeworkItem.title),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  homeworkItem.title,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.bodyText2,
                 ),
               ),
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    child: Icon(
-                      Icons.insert_drive_file,
-                      size: 60,
-                    ),
-                  ),
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Icon(
+                  Icons.insert_drive_file,
+                  size: 60,
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

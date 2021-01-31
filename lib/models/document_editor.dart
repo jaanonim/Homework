@@ -9,12 +9,19 @@ import 'document_elements/text_doc_element.dart';
 class DocumentEditor {
   List<DocumentElement> items = [];
   var title;
+  HomeworkItem homework;
   Function saveFunc;
 
   DocumentEditor(FileItem homework, var saveFunction) {
+    this.homework = homework;
     items = homework.docElements;
     title = homework.title;
     saveFunc = saveFunction;
+  }
+
+  void rename(String title){
+    homework.title=title;
+    saveFunc();
   }
 
   List<DocumentElement> getPages() {
