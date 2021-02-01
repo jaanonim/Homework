@@ -6,7 +6,6 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:image/image.dart' as img;
 
 class PdfCreator {
   final double widthA4Page = 841;
@@ -45,18 +44,15 @@ class PdfCreator {
   }
 
   void createNewPageByte(String text, Uint8List file) {
-    var imageOrginal = img.decodeImage(file);
-    var imgNew = img.copyRotate(imageOrginal, 90);
-    print("generate text");
     final image = PdfImage.file(
       doc.document,
-      bytes: img.encodeJpg(imgNew),
+      bytes: file,
     );
     doc.addPage(
       pw.Page(
         build: (pw.Context context) => pw.Center(
           child: pw.Stack(children: [
-            pw.Image(image, fit: pw.BoxFit.fill),
+            pw.Image(image, fit: pw.BoxFit.fitWidth),
             pw.Align(
                 alignment: pw.Alignment.topCenter,
                 child: pw.Text(text, style: pw.TextStyle(fontSize: 30))),
