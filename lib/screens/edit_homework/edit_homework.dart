@@ -32,7 +32,7 @@ class _EditHomeworkState extends State<EditHomework> {
         appBar: AppBar(
           title: InkWell(
               onTap: () {
-                controller.text=_title;
+                controller.text = _title;
                 inputPopup(context, "Rename folder", "Rename", controller, () {
                   setState(() {
                     _editor.rename(controller.text);
@@ -92,7 +92,7 @@ class _EditHomeworkState extends State<EditHomework> {
         .getImageCamera(_settings == null ? 50 : _settings.imgQuality);
     if (src != null) {
       setState(() {
-        _editor.addNewImage(ImageDocElement(src));
+        _editor.addNewImage(ImageDocElement(src, 0));
       });
     }
   }
@@ -102,13 +102,13 @@ class _EditHomeworkState extends State<EditHomework> {
         .getImageGallery(_settings == null ? 50 : _settings.imgQuality);
     if (src != null) {
       setState(() {
-        _editor.addNewImage(ImageDocElement(src));
+        _editor.addNewImage(ImageDocElement(src, 0));
       });
     }
   }
 
   Future<void> addText() async {
-    controller.text="";
+    controller.text = "";
     inputPopup(context, "New text", "Create", controller, () {
       setState(() {
         _editor.addNewText(TextDocElement(controller.text));
@@ -118,13 +118,17 @@ class _EditHomeworkState extends State<EditHomework> {
 
   generatePage(DocumentElement pathImage) {
     return Stack(children: [
-      InkWell(
-          onTap: () {
-            pathImage.onClick(context, (){setState(() {
-              _data["save"]();
-            });});
-          },
-          child: pathImage.generatePage()),
+      InkWell(onTap: () {
+        pathImage.onClick(context, () {
+          setState(() {
+            _data["save"]();
+          });
+        });
+      }, child: pathImage.generatePage(() {
+        setState(() {
+          _data["save"]();
+        });
+      })),
       Align(
         alignment: Alignment.topRight,
         child: Column(
