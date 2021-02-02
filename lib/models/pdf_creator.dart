@@ -18,7 +18,8 @@ class PdfCreator {
   Future<String> get _localPath async {
     String path;
     if (Platform.isAndroid) {
-      path = await ExtStorage.getExternalStoragePublicDirectory(ExtStorage.DIRECTORY_DOWNLOADS);
+      path = await ExtStorage.getExternalStoragePublicDirectory(
+          ExtStorage.DIRECTORY_DOWNLOADS);
     } else {
       Directory directory = await getDownloadsDirectory();
       path = directory.path;
@@ -30,14 +31,15 @@ class PdfCreator {
     createNewPageByte(text, File(imageSrc).readAsBytesSync());
   }
 
-  void createNewPageText(String text) async{
+  void createNewPageText(String text) async {
     final ttf = pw.Font.ttf(await rootBundle.load("assets/OpenSans.ttf"));
 
     doc.addPage(
       pw.Page(
-        build: (pw.Context context) =>
-            pw.Center(child: pw.Text(text, style: pw.TextStyle(fontSize: 30, font: ttf)),)
-      ),
+          build: (pw.Context context) => pw.Center(
+                child:
+                    pw.Text(text, style: pw.TextStyle(fontSize: 30, font: ttf)),
+              )),
     );
   }
 
@@ -50,7 +52,7 @@ class PdfCreator {
       pw.Page(
         build: (pw.Context context) => pw.Center(
           child: pw.Stack(children: [
-            pw.Image(image, fit: pw.BoxFit.fill),
+            pw.Image(image, fit: pw.BoxFit.fitWidth),
             pw.Align(
                 alignment: pw.Alignment.topCenter,
                 child: pw.Text(text, style: pw.TextStyle(fontSize: 30))),
@@ -61,9 +63,11 @@ class PdfCreator {
   }
 
   Future<String> save(String dirName) async {
-    //TODO(anyone): chcek if the dirname is safe
-    if(!await _requestPermissions()){ print("Permissions error!"); return null;}
-    String dirPath = (await _localPath) ;
+    if (!await _requestPermissions()) {
+      print("Permissions error!");
+      return null;
+    }
+    String dirPath = (await _localPath);
     new Directory(dirPath).create(recursive: true).then((value) {
       final file = File(dirPath + "/" + dirName + ".pdf");
       print(dirPath + "/" + dirName);
