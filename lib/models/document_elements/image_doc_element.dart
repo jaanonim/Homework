@@ -11,7 +11,7 @@ class ImageDocElement extends DocumentElement {
   var decodedImg;
   var encodedImg;
 
-  ImageDocElement(var imageSrc, int rotation) {
+  ImageDocElement(var imageSrc) {
     this.imageSrc = imageSrc;
     encodedImg = File(imageSrc).readAsBytesSync();
     decodedImg = img.decodeImage(encodedImg);

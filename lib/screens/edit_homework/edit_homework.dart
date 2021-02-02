@@ -92,7 +92,7 @@ class _EditHomeworkState extends State<EditHomework> {
         .getImageCamera(_settings == null ? 50 : _settings.imgQuality);
     if (src != null) {
       setState(() {
-        _editor.addNewImage(ImageDocElement(src, 0));
+        _editor.addNewImage(ImageDocElement(src));
       });
     }
   }
@@ -102,7 +102,7 @@ class _EditHomeworkState extends State<EditHomework> {
         .getImageGallery(_settings == null ? 50 : _settings.imgQuality);
     if (src != null) {
       setState(() {
-        _editor.addNewImage(ImageDocElement(src, 0));
+        _editor.addNewImage(ImageDocElement(src));
       });
     }
   }

@@ -11,7 +11,7 @@ abstract class DocumentElement {
     if (obj.containsKey("imageSrc")) {
       var rotation = obj.containsKey("rotation") ? obj['rotation'] : 0;
 
-      return ImageDocElement(obj["imageSrc"],rotation);
+      return ImageDocElement(obj["imageSrc"]);
     }
     if (obj.containsKey("text")) {
       return TextDocElement(obj["text"]);
