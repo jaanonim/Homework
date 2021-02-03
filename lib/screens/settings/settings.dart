@@ -9,7 +9,6 @@ import 'package:Homework/screens/settings/components/clickable_setting.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Settings extends StatelessWidget {
-
   _launchURL(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -39,7 +38,8 @@ class Settings extends StatelessWidget {
             Divider(),
             SwitchSetting(
               title: 'Automatic file name',
-              subtitle: 'If is enabled every file will be created with default name',
+              subtitle:
+                  'If is enabled every file will be created with default name',
               value: data.automaticFileName,
               switchValue: (bool value) {
                 data.automaticFileName = value;
@@ -86,16 +86,24 @@ class Settings extends StatelessWidget {
                 data.enabledDefaultFile = value;
               },
             ),
-            ClickableSetting(title: 'Edit default file', onClick: () {
-              Navigator.pushNamed(context, "/editHomework",
-                  arguments: {"homeworkItem": data.defaultFile, "save": data.saveAndRefresh});
-            }),
+            ClickableSetting(
+                title: 'Edit default file',
+                onClick: () {
+                  Navigator.pushNamed(context, "/editHomework", arguments: {
+                    "homeworkItem": data.defaultFile,
+                    "save": data.saveAndRefresh
+                  });
+                }),
             Divider(),
             ClickableSetting(
               title: 'Image quality',
-              subtitle: data.imgQuality.toString()+"%",
+              subtitle: data.imgQuality.toString() + "%",
               onClick: () {
-                inputSliderPopup(context, "Set image quality:", "Save", data.imgQuality, (v){data.imgQuality=v;});
+                inputSliderPopup(
+                    context, "Set image quality:", "Save", data.imgQuality,
+                    (v) {
+                  data.imgQuality = v;
+                });
               },
             ),
             ClickableSetting(
@@ -118,14 +126,15 @@ class Settings extends StatelessWidget {
                   infoPopup(
                       context,
                       'Authors:',
-                      '- Dominik Wojtasik\n- Mateusz Mrowiec',
+                      '- Dominik Wojtasik\n- Mateusz Mrowiec\n -Michał Wawrzeń',
                       'Ok');
                 }),
             ClickableSetting(
                 title: 'License',
                 subtitle: 'GNU General Public License v3.0',
                 onClick: () {
-                  _launchURL("https://raw.githubusercontent.com/jaanonim/Homework/master/LICENSE");
+                  _launchURL(
+                      "https://raw.githubusercontent.com/jaanonim/Homework/master/LICENSE");
                 }),
             ClickableSetting(
                 title: 'This project is open source',
