@@ -71,6 +71,19 @@ class Body extends StatelessWidget {
   Widget build(BuildContext context) {
     final Hierarchy hierarchy = Provider.of<Hierarchy>(context);
 
+    if(!hierarchy.isLoaded){
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("We are loading your files ...", style: Theme.of(context).textTheme.headline6,),
+            SizedBox(height: 10,),
+            Text("Please be patient."),
+          ],
+        ),
+      );
+    }
+
     if (hierarchy.now.children.length == 0 && hierarchy.isHome) {
       return Center(
         child: Column(

@@ -70,7 +70,6 @@ class PdfCreator {
     String dirPath = (await _localPath);
     new Directory(dirPath).create(recursive: true).then((value) {
       final file = File(dirPath + "/" + dirName + ".pdf");
-      print(dirPath + "/" + dirName);
       file.writeAsBytesSync(doc.save());
     });
     return dirPath + "/" + dirName + ".pdf";

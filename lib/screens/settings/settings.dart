@@ -126,7 +126,7 @@ class Settings extends StatelessWidget {
                   infoPopup(
                       context,
                       'Authors:',
-                      '- Dominik Wojtasik\n- Mateusz Mrowiec\n -Michał Wawrzeń',
+                      '- Dominik Wojtasik\n- Mateusz Mrowiec\n- Michał Wawrzeń',
                       'Ok');
                 }),
             ClickableSetting(

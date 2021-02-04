@@ -54,8 +54,7 @@ class DocumentEditor {
     saveFunc();
   }
 
-  Future<String> generatePDF(bool openFile) async {
-    print("Generating file");
+  PdfCreator generatePDF() {
     var pdf = new PdfCreator();
     var tempText = "";
     for (var src in items) {
@@ -70,15 +69,18 @@ class DocumentEditor {
     if (tempText != "") {
       pdf.createNewPageText(tempText);
     }
-    print("Saving");
-    String path = await pdf.save(title);
+    return pdf;
+  }
+
+  Future<String> savePDF(bool openFile) async {
+    String path = await generatePDF().save(title);
     //if(openFile) OpenFile.open(path);
     return path;
   }
 
+
   Future<void> sharePDF() async {
-    String path = await generatePDF(false);
-    print("Sharing");
+    String path = await savePDF(false);
     Share.shareFiles([path], subject: 'Homework Generator-' + title);
   }
 }

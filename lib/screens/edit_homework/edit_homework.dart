@@ -62,7 +62,7 @@ class _EditHomeworkState extends State<EditHomework> {
                     leftBarIndicatorColor: Theme.of(context).primaryColor,
                     duration: Duration(seconds: 3),
                   )..show(context);
-                  await _editor.generatePDF(true);
+                  await _editor.savePDF(true);
                   Flushbar(
                     message: 'Downloaded',
                     backgroundColor: Theme.of(context).accentColor,

@@ -11,15 +11,17 @@ class Hierarchy with ChangeNotifier {
   FolderItem get now => hierarchy.last;
 
   bool get isHome => now == home;
+  bool isLoaded = false;
 
   Hierarchy() {
     readItem().then((h) {
       if (h != null) {
         hierarchy.first = h;
-        notifyListeners();
       } else {
         print("Cannot read file!");
       }
+      isLoaded = true;
+      notifyListeners();
     });
   }
 
