@@ -52,7 +52,7 @@ class PdfCreator {
       pw.Page(
         build: (pw.Context context) => pw.Center(
           child: pw.Stack(children: [
-            pw.Image(image, fit: pw.BoxFit.fitWidth),
+            pw.Image(image, fit: pw.BoxFit.fill),
             pw.Align(
                 alignment: pw.Alignment.topCenter,
                 child: pw.Text(text, style: pw.TextStyle(fontSize: 30))),
