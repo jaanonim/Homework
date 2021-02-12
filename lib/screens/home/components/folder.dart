@@ -71,6 +71,7 @@ class Folder extends StatelessWidget {
                             inputPopup(
                                 context, "Rename folder", "Rename", controller,
                                 () {
+                              Navigator.pop(context);
                               hierarchy.renameItem(
                                   homeworkItem, controller.text);
                             });

@@ -53,6 +53,7 @@ class Settings extends StatelessWidget {
                 controller.text = data.defaultFileName;
                 inputPopup(context, 'Default name for file', 'Ok', controller,
                     () {
+                  Navigator.pop(context);
                   data.defaultFileName = controller.text;
                 });
               },
@@ -115,6 +116,7 @@ class Settings extends StatelessWidget {
                 inputPopup(
                     context, 'Date format (e.g. dd/MM/yyyy)', 'Ok', controller,
                     () {
+                  Navigator.pop(context);
                   data.dateFormat = controller.text;
                 });
               },

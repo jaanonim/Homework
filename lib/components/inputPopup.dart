@@ -23,14 +23,12 @@ inputPopup(BuildContext context, String title, String buttonText,
               isDense: true,
             ),
             onSubmitted: (value) {
-              Navigator.pop(context);
               create();
             },
           ),
           actions: [
             MaterialButton(
               onPressed: () {
-                Navigator.pop(context);
                 create();
               },
               elevation: 5,

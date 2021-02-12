@@ -7,6 +7,7 @@ import 'package:Homework/screens/home/components/hierarchy_element.dart';
 import 'package:provider/provider.dart';
 import 'package:Homework/models/settings_data.dart';
 import 'package:Homework/models/custom_markups.dart';
+import 'package:flushbar/flushbar.dart';
 
 class Home extends StatelessWidget {
   final controller = TextEditingController();
@@ -33,11 +34,11 @@ class Home extends StatelessWidget {
           preferredSize: Size.fromHeight(40),
         ),
         actions: [
-        IconButton(
-          icon: Icon(Icons.settings),
-          onPressed:(){
-            Navigator.pushNamed(context, "/settings");
-          },
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.pushNamed(context, "/settings");
+            },
           ),
         ],
       ),
@@ -48,9 +49,23 @@ class Home extends StatelessWidget {
             controller.text = data.defaultFileName;
           }
           inputPopup(context, "Create new homework:", "Create", controller, () {
-            HomeworkItem item = hierarchy.createFile(data.customMarkup ? useMarkups(controller.text, data) : controller.text, data);
-            Navigator.pushNamed(context, "/editHomework",
-                arguments: {"homeworkItem": item, "save": hierarchy.saveAndRefresh});
+            if (controller.text != "") {
+              Navigator.pop(context);
+              HomeworkItem item = hierarchy.createFile(
+                  data.customMarkup
+                      ? useMarkups(controller.text, data)
+                      : controller.text,
+                  data);
+              Navigator.pushNamed(context, "/editHomework", arguments: {
+                "homeworkItem": item,
+                "save": hierarchy.saveAndRefresh
+              });
+            }
+            else{
+              Flushbar(message: "You must enter name.",backgroundColor: Colors.red,
+                leftBarIndicatorColor: Colors.redAccent,duration: Duration(seconds: 2),
+              )..show(context);
+            }
           });
         },
         child: Icon(

@@ -136,6 +136,7 @@ class Body extends StatelessWidget {
                 hierarchy.now.children[oldIndex]);
           } else {
             inputPopup(context, "Create new folder:", "Create", controller, () {
+              Navigator.pop(context);
               hierarchy.createFolder(controller.text, [
                 hierarchy.now.children[newIndex],
                 hierarchy.now.children[oldIndex],

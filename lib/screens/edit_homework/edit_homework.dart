@@ -34,9 +34,15 @@ class _EditHomeworkState extends State<EditHomework> {
               onTap: () {
                 controller.text = _title;
                 inputPopup(context, "Rename folder", "Rename", controller, () {
+                  if(controller.text==""){
+                  Navigator.pop(context);
                   setState(() {
                     _editor.rename(controller.text);
-                  });
+                  });}else{
+                    Flushbar(message: "You must enter name.",backgroundColor: Colors.red,
+                      leftBarIndicatorColor: Colors.redAccent,duration: Duration(seconds: 2),
+                    )..show(context);
+                  }
                 });
               },
               child: Text(_title)),
@@ -110,6 +116,7 @@ class _EditHomeworkState extends State<EditHomework> {
   Future<void> addText() async {
     controller.text = "";
     inputPopup(context, "New text", "Create", controller, () {
+      Navigator.pop(context);
       setState(() {
         _editor.addNewText(TextDocElement(controller.text));
       });

@@ -37,7 +37,8 @@ class TextDocElement extends DocumentElement {
   @override
   void onClick(context, saveFunction) {
     controller.text = text;
-    inputPopup(context, "ChangeText", "CHANGE", controller, () {
+    inputPopup(context, "ChangeText", "Change", controller, () {
+      Navigator.pop(context);
       text = controller.text;
       saveFunction();
     });
