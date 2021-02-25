@@ -25,7 +25,8 @@ class ImageDocElement extends DocumentElement {
 
   @override
   Widget generatePage(saveFunction) {
-    return Stack(children: [Image.memory(encodedImg),
+    return Stack(children: [
+      FadeInImage(placeholder: AssetImage('assets/loading.gif'), image: MemoryImage(encodedImg)),
       Align(
         alignment: Alignment.topLeft,
         child: Row(children: [
