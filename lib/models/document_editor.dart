@@ -54,16 +54,16 @@ class DocumentEditor {
     saveFunc();
   }
 
-  PdfCreator generatePDF() {
+  Future<PdfCreator> generatePDF() async {
     var pdf = new PdfCreator();
     var tempText = "";
     for (var src in items) {
       if (src is TextDocElement) {
-        tempText += (src as TextDocElement).text;
+        tempText += src.text;
         continue;
       }
       var img = src as ImageDocElement;
-      pdf.createNewPageSrc(tempText, img.imageSrc);
+      pdf.createNewPageSrc(tempText, img.imageSrc, img.direction);
       tempText = "";
     }
     if (tempText != "") {
@@ -73,7 +73,8 @@ class DocumentEditor {
   }
 
   Future<String> savePDF(bool openFile) async {
-    String path = await generatePDF().save(title);
+    var pdf = await generatePDF();
+    String path = await pdf.save(title);
     //if(openFile) OpenFile.open(path);
     return path;
   }

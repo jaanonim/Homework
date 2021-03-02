@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'dart:typed_data';
+import 'package:image/image.dart' as img;
 import 'package:ext_storage/ext_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -27,8 +27,8 @@ class PdfCreator {
     return path;
   }
 
-  void createNewPageSrc(String text, String imageSrc) {
-    createNewPageByte(text, File(imageSrc).readAsBytesSync());
+  void createNewPageSrc(String text, String imageSrc, int direction) async {
+    createNewPageByte(text, File(imageSrc), direction);
   }
 
   void createNewPageText(String text) async {
@@ -43,11 +43,17 @@ class PdfCreator {
     );
   }
 
-  void createNewPageByte(String text, Uint8List file) {
+  void createNewPageByte(String text, file, int direction) async {
+    var data = file.readAsBytesSync();
+    var decodedImg = img.decodeImage(data);
+    decodedImg = img.copyRotate(decodedImg, direction*90);
+    data = img.encodeJpg(decodedImg);
+
     final image = PdfImage.file(
       doc.document,
-      bytes: file,
+      bytes: data,
     );
+
     doc.addPage(
       pw.Page(
         build: (pw.Context context) => pw.Center(

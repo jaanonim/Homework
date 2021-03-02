@@ -13,7 +13,7 @@ class TextDocElement extends DocumentElement {
   }
 
   @override
-  Widget generatePage(saveFunction) {
+  Widget generatePage(saveFunction, context) {
     return Align(
         alignment: Alignment.center,
         child: ConstrainedBox(
