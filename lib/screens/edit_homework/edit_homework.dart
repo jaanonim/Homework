@@ -98,7 +98,7 @@ class _EditHomeworkState extends State<EditHomework> {
         .getImageCamera(_settings == null ? 50 : _settings.imgQuality);
     if (src != null) {
       setState(() {
-        _editor.addNewImage(ImageDocElement(src));
+        _editor.addNewImage(ImageDocElement(imageSrc: src, direction: 0));
       });
     }
   }
@@ -108,7 +108,7 @@ class _EditHomeworkState extends State<EditHomework> {
         .getImageGallery(_settings == null ? 50 : _settings.imgQuality);
     if (src != null) {
       setState(() {
-        _editor.addNewImage(ImageDocElement(src));
+        _editor.addNewImage(ImageDocElement(imageSrc: src, direction: 0));
       });
     }
   }
@@ -135,37 +135,55 @@ class _EditHomeworkState extends State<EditHomework> {
         setState(() {
           _data["save"]();
         });
-      })),
+      },context)),
       Align(
         alignment: Alignment.topRight,
         child: Column(
           children: [
-            IconButton(
-              icon: Icon(Icons.arrow_upward_rounded),
+            MaterialButton(
               onPressed: () {
                 setState(() {
                   _editor.swapPages(pathImage, true);
                 });
               },
-              iconSize: 40,
+              elevation: 10.0,
+              color: Theme.of(context).accentColor,
+              child: Icon(
+                Icons.arrow_upward_rounded,
+                size: 25.0,
+              ),
+              shape: CircleBorder(),
+              minWidth: 0,
             ),
-            IconButton(
-              icon: Icon(Icons.delete_rounded),
+            MaterialButton(
               onPressed: () {
                 setState(() {
                   _editor.removePage(pathImage);
                 });
               },
-              iconSize: 40,
+              elevation: 10.0,
+             color: Theme.of(context).accentColor,
+              child: Icon(
+                Icons.delete_rounded,
+                size: 25.0,
+              ),
+              shape: CircleBorder(),
+              minWidth: 0,
             ),
-            IconButton(
-              icon: Icon(Icons.arrow_downward_rounded),
+            MaterialButton(
               onPressed: () {
                 setState(() {
                   _editor.swapPages(pathImage, false);
                 });
               },
-              iconSize: 40,
+              elevation: 10.0,
+              color: Theme.of(context).accentColor,
+              child: Icon(
+                Icons.arrow_downward_rounded,
+                size: 25.0,
+              ),
+              shape: CircleBorder(),
+              minWidth: 0,
             ),
           ],
         ),
