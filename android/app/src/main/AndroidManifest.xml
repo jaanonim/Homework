@@ -10,7 +10,7 @@
     <application
         android:requestLegacyExternalStorage="true"
         android:name="io.flutter.app.FlutterApplication"
-        android:label="homework"
+        android:label="Homework"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
