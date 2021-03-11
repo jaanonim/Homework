@@ -45,9 +45,11 @@ class PdfCreator {
 
   void createNewPageByte(String text, file, int direction) async {
     var data = file.readAsBytesSync();
-    var decodedImg = img.decodeImage(data);
-    decodedImg = img.copyRotate(decodedImg, direction*90);
-    data = img.encodeJpg(decodedImg);
+    if(direction%4==0) {
+      var decodedImg = img.decodeImage(data);
+      decodedImg = img.copyRotate(decodedImg, direction * 90);
+      data = img.encodeJpg(decodedImg);
+    }
 
     final image = PdfImage.file(
       doc.document,
