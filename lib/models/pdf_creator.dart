@@ -7,6 +7,8 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+import 'document_elements/image_doc_element.dart';
+
 class PdfCreator {
   final double widthA4Page = 841;
   var doc = pw.Document();
@@ -27,8 +29,8 @@ class PdfCreator {
     return path;
   }
 
-  void createNewPageSrc(String text, String imageSrc, int direction) async {
-    createNewPageByte(text, File(imageSrc), direction);
+  void createNewPageSrc(String text, ImageDocElement img) async {
+    createNewPageByte(text, img);
   }
 
   void createNewPageText(String text) async {
@@ -43,12 +45,15 @@ class PdfCreator {
     );
   }
 
-  void createNewPageByte(String text, file, int direction) async {
+  void createNewPageByte(String text,ImageDocElement element) async {
+    var file = File(element.imageSrc);
     var data = file.readAsBytesSync();
-    if(direction%4==0) {
+    if(element.direction%4!=0) {
       var decodedImg = img.decodeImage(data);
-      decodedImg = img.copyRotate(decodedImg, direction * 90);
+      decodedImg = img.copyRotate(decodedImg, element.direction * 90);
       data = img.encodeJpg(decodedImg);
+      file.writeAsBytes(data);
+      element.direction = 0;
     }
 
     final image = PdfImage.file(
@@ -60,7 +65,7 @@ class PdfCreator {
       pw.Page(
         build: (pw.Context context) => pw.Center(
           child: pw.Stack(children: [
-            pw.Image(image, fit: pw.BoxFit.fill),
+            pw.Image(image, fit: pw.BoxFit.fitWidth),
             pw.Align(
                 alignment: pw.Alignment.topCenter,
                 child: pw.Text(text, style: pw.TextStyle(fontSize: 30))),

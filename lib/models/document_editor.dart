@@ -63,7 +63,7 @@ class DocumentEditor {
         continue;
       }
       var img = src as ImageDocElement;
-      pdf.createNewPageSrc(tempText, img.imageSrc, img.direction);
+      pdf.createNewPageSrc(tempText, img);
       tempText = "";
     }
     if (tempText != "") {

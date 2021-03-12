@@ -61,8 +61,8 @@ class _EditHomeworkState extends State<EditHomework> {
                     backgroundColor: Theme.of(context).accentColor,
                     leftBarIndicatorColor: Theme.of(context).primaryColor,
                   )..show(context);
-                  await Future.delayed(Duration(seconds: 1), () {
-                    _editor.sharePDF();
+                  await Future.delayed(Duration(seconds: 1), () async {
+                    await _editor.sharePDF();
                   });
                 }),
             IconButton(
@@ -74,8 +74,8 @@ class _EditHomeworkState extends State<EditHomework> {
                     leftBarIndicatorColor: Theme.of(context).primaryColor,
                     duration: Duration(seconds: 3),
                   )..show(context);
-                  await Future.delayed(Duration(seconds: 1), () {
-                    _editor.savePDF(true);
+                  await Future.delayed(Duration(seconds: 1), () async {
+                    await _editor.savePDF(true);
                   });
                   Flushbar(
                     message: 'Downloaded',
