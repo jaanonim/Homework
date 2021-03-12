@@ -75,6 +75,7 @@ class DocumentEditor {
   Future<String> savePDF(bool openFile) async {
     var pdf = await generatePDF();
     String path = await pdf.save(title);
+    saveFunc();
     //if(openFile) OpenFile.open(path);
     return path;
   }
