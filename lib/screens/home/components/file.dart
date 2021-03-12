@@ -68,14 +68,16 @@ class File extends StatelessWidget {
                   ),
                   Expanded(
                     child: MaterialButton(
-                      onPressed: () {
+                      onPressed: () async {
                         Flushbar(
-                          message: 'Start Sharing',
+                          message: 'Sharing...',
                           duration: Duration(seconds: 3),
                           backgroundColor: Theme.of(context).accentColor,
                           leftBarIndicatorColor: Theme.of(context).primaryColor,
                         )..show(context);
-                        _editor.sharePDF();
+                        await Future.delayed(Duration(seconds: 1), () {
+                          _editor.sharePDF();
+                        });
                       },
                       child: Icon(
                         Icons.share,

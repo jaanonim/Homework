@@ -34,13 +34,17 @@ class _EditHomeworkState extends State<EditHomework> {
               onTap: () {
                 controller.text = _title;
                 inputPopup(context, "Rename folder", "Rename", controller, () {
-                  if(controller.text==""){
-                  Navigator.pop(context);
-                  setState(() {
-                    _editor.rename(controller.text);
-                  });}else{
-                    Flushbar(message: "You must enter name.",backgroundColor: Colors.red,
-                      leftBarIndicatorColor: Colors.redAccent,duration: Duration(seconds: 2),
+                  if (controller.text == "") {
+                    Navigator.pop(context);
+                    setState(() {
+                      _editor.rename(controller.text);
+                    });
+                  } else {
+                    Flushbar(
+                      message: "You must enter name.",
+                      backgroundColor: Colors.red,
+                      leftBarIndicatorColor: Colors.redAccent,
+                      duration: Duration(seconds: 2),
                     )..show(context);
                   }
                 });
@@ -50,14 +54,16 @@ class _EditHomeworkState extends State<EditHomework> {
           actions: [
             IconButton(
                 icon: Icon(Icons.share),
-                onPressed: () {
+                onPressed: () async {
                   Flushbar(
                     message: 'Sharing...',
                     duration: Duration(seconds: 3),
                     backgroundColor: Theme.of(context).accentColor,
                     leftBarIndicatorColor: Theme.of(context).primaryColor,
                   )..show(context);
-                  _editor.sharePDF();
+                  await Future.delayed(Duration(seconds: 1), () {
+                    _editor.sharePDF();
+                  });
                 }),
             IconButton(
                 icon: Icon(Icons.file_download),
@@ -68,7 +74,9 @@ class _EditHomeworkState extends State<EditHomework> {
                     leftBarIndicatorColor: Theme.of(context).primaryColor,
                     duration: Duration(seconds: 3),
                   )..show(context);
-                  await _editor.savePDF(true);
+                  await Future.delayed(Duration(seconds: 1), () {
+                    _editor.savePDF(true);
+                  });
                   Flushbar(
                     message: 'Downloaded',
                     backgroundColor: Theme.of(context).accentColor,
@@ -125,17 +133,19 @@ class _EditHomeworkState extends State<EditHomework> {
 
   generatePage(DocumentElement pathImage) {
     return Stack(children: [
-      InkWell(onTap: () {
-        pathImage.onClick(context, () {
-          setState(() {
-            _data["save"]();
-          });
-        });
-      }, child: pathImage.generatePage(() {
-        setState(() {
-          _data["save"]();
-        });
-      },context)),
+      InkWell(
+          onTap: () {
+            pathImage.onClick(context, () {
+              setState(() {
+                _data["save"]();
+              });
+            });
+          },
+          child: pathImage.generatePage(() {
+            setState(() {
+              _data["save"]();
+            });
+          }, context)),
       Align(
         alignment: Alignment.topRight,
         child: Column(
@@ -162,7 +172,7 @@ class _EditHomeworkState extends State<EditHomework> {
                 });
               },
               elevation: 10.0,
-             color: Theme.of(context).accentColor,
+              color: Theme.of(context).accentColor,
               child: Icon(
                 Icons.delete_rounded,
                 size: 25.0,
