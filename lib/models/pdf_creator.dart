@@ -45,10 +45,10 @@ class PdfCreator {
     );
   }
 
-  void createNewPageByte(String text,ImageDocElement element) async {
+  void createNewPageByte(String text, ImageDocElement element) async {
     var file = File(element.imageSrc);
     var data = file.readAsBytesSync();
-    if(element.direction%4!=0) {
+    if (element.direction % 4 != 0) {
       var decodedImg = img.decodeImage(data);
       decodedImg = img.copyRotate(decodedImg, element.direction * 90);
       data = img.encodeJpg(decodedImg);
@@ -65,7 +65,7 @@ class PdfCreator {
       pw.Page(
         build: (pw.Context context) => pw.Center(
           child: pw.Stack(children: [
-            pw.Image(image, fit: pw.BoxFit.fitWidth),
+            pw.SizedBox.expand(child: pw.Image(image, fit: pw.BoxFit.fitWidth)),
             pw.Align(
                 alignment: pw.Alignment.topCenter,
                 child: pw.Text(text, style: pw.TextStyle(fontSize: 30))),
