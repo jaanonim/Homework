@@ -1,12 +1,14 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:Homework/models/document_elements/document_element.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image/image.dart' as img;
 
 class ImageDocElement extends DocumentElement {
   String imageSrc;
   int direction;
 
-  ImageDocElement({imageSrc, direction}){
+  ImageDocElement({imageSrc, direction}) {
     this.imageSrc = imageSrc;
     this.direction = direction != Null ? direction : 0;
   }
@@ -64,8 +66,34 @@ class ImageDocElement extends DocumentElement {
   }
 
   @override
-  void onClick(context, saveFunction) {
-    return;
+  void onClick(context, saveFunction) async {
+    var file = File(this.imageSrc);
+    var data = file.readAsBytesSync();
+    if (this.direction % 4 != 0) {
+      var decodedImg = img.decodeImage(data);
+      decodedImg = img.copyRotate(decodedImg, this.direction * 90);
+      data = img.encodeJpg(decodedImg);
+      file.writeAsBytes(data);
+      this.direction = 0;
+      saveFunction();
+    }
+
+    File c = await ImageCropper.cropImage(
+      sourcePath: imageSrc,
+      androidUiSettings: AndroidUiSettings(
+          toolbarTitle: 'Edit photo',
+          toolbarColor: Theme.of(context).primaryColor,
+          statusBarColor:  Colors.cyan[850],
+          backgroundColor: Theme.of(context).backgroundColor,
+          hideBottomControls: true,
+          toolbarWidgetColor: Colors.white,
+          lockAspectRatio: false),
+    );
+    if (await c.exists()) {
+      this.remove();
+      this.imageSrc = c.path;
+      saveFunction();
+    }
   }
 
   void remove() {
