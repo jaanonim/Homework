@@ -4,12 +4,11 @@ import 'package:Homework/models/document_elements/document_element.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image/image.dart' as img;
 
-
 class ImageDocElement extends DocumentElement {
   String imageSrc;
   int direction;
 
-  ImageDocElement({imageSrc, direction}){
+  ImageDocElement({imageSrc, direction}) {
     this.imageSrc = imageSrc;
     this.direction = direction != Null ? direction : 0;
   }
@@ -76,25 +75,26 @@ class ImageDocElement extends DocumentElement {
       data = img.encodeJpg(decodedImg);
       file.writeAsBytes(data);
       this.direction = 0;
+      saveFunction();
     }
 
     File c = await ImageCropper.cropImage(
       sourcePath: imageSrc,
-
       androidUiSettings: AndroidUiSettings(
-          toolbarTitle: 'Cropper',
+          toolbarTitle: 'Edit photo',
           toolbarColor: Theme.of(context).primaryColor,
-          statusBarColor: Theme.of(context).primaryColor,
+          statusBarColor:  Colors.cyan[850],
           backgroundColor: Theme.of(context).backgroundColor,
           hideBottomControls: true,
           toolbarWidgetColor: Colors.white,
           lockAspectRatio: false),
     );
-    this.remove();
-    this.imageSrc = c.path;
-    saveFunction();
+    if (await c.exists()) {
+      this.remove();
+      this.imageSrc = c.path;
+      saveFunction();
+    }
   }
-
 
   void remove() {
     File(imageSrc).delete();
