@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:image/image.dart' as img;
 import 'package:ext_storage/ext_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
@@ -46,15 +45,7 @@ class PdfCreator {
   }
 
   void createNewPageByte(String text, ImageDocElement element) async {
-    var file = File(element.imageSrc);
-    var data = file.readAsBytesSync();
-    if (element.direction % 4 != 0) {
-      var decodedImg = img.decodeImage(data);
-      decodedImg = img.copyRotate(decodedImg, element.direction * 90);
-      data = img.encodeJpg(decodedImg);
-      file.writeAsBytes(data);
-      element.direction = 0;
-    }
+    var data = element.rotate((){});
 
     final image = PdfImage.file(
       doc.document,
