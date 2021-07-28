@@ -33,7 +33,7 @@ class _EditHomeworkState extends State<EditHomework> {
           title: InkWell(
               onTap: () {
                 controller.text = _title;
-                inputPopup(context, "Rename folder", "Rename", controller, () {
+                inputPopup(context, "Rename homework", "Rename", controller, () {
                   if (controller.text == "") {
                     Navigator.pop(context);
                     setState(() {
