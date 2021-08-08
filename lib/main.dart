@@ -6,21 +6,38 @@ import 'package:Homework/screens/settings/settings.dart';
 import 'package:Homework/theme/style.dart';
 import 'package:provider/provider.dart';
 import 'package:Homework/models/settings_data.dart';
+import 'package:unity_ads_plugin/unity_ads.dart';
 
 main() {
-  runApp(ChangeNotifierProvider<SettingsData>(
-    create: (context) => SettingsData(true),
-    child: ChangeNotifierProvider<Hierarchy>(
-      create: (context) => Hierarchy(),
-      child: App(),
-    ),
-  ));
+  runApp(Wrapper());
 }
+
+class Wrapper extends StatelessWidget {
+
+  @override
+  Widget build(BuildContext context) {
+    UnityAds.init(
+        gameId: "4237345",
+        testMode: false,
+        listener: (state, args) => print('Init Listener: $state => $args')
+    );
+
+    return ChangeNotifierProvider<SettingsData>(
+      create: (context) => SettingsData(true),
+      child: ChangeNotifierProvider<Hierarchy>(
+        create: (context) => Hierarchy(),
+        child: App(),
+      ),
+    );
+  }
+}
+
 
 class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final SettingsData data = Provider.of<SettingsData>(context);
 
     return MaterialApp(

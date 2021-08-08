@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:Homework/models/settings_data.dart';
 import 'package:Homework/models/custom_markups.dart';
 import 'package:flushbar/flushbar.dart';
+import 'package:Homework/components/adBar.dart';
 
 class Home extends StatelessWidget {
   final controller = TextEditingController();
@@ -74,6 +75,7 @@ class Home extends StatelessWidget {
           size: 32,
         ),
       ),
+      bottomNavigationBar: AdBar()
     );
   }
 }

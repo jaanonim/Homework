@@ -1,3 +1,4 @@
+import 'package:Homework/components/adBar.dart';
 import 'package:flutter/material.dart';
 import 'package:Homework/models/settings_data.dart';
 import 'package:provider/provider.dart';
@@ -145,6 +146,8 @@ class Settings extends StatelessWidget {
                   _launchURL("https://github.com/jaanonim/Homework/");
                 }),
           ],
-        ));
+        ),
+        bottomNavigationBar: AdBar()
+    );
   }
 }

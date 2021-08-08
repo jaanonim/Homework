@@ -1,3 +1,4 @@
+import 'package:Homework/components/adBar.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:Homework/components/inputPopup.dart';
@@ -98,7 +99,9 @@ class _EditHomeworkState extends State<EditHomework> {
         floatingActionButton: AddDocumentElementMenu(
             addCameraPhoto: addCameraPhoto,
             addGalleryPhoto: addGalleryPhoto,
-            addTextElement: addText));
+            addTextElement: addText),
+        bottomNavigationBar: AdBar()
+    );
   }
 
   Future<void> addCameraPhoto() async {
